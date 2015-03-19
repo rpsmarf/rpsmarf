@@ -13,8 +13,8 @@ Guide:
 .. toctree::
    :maxdepth: 2
 
-    license
-    help
+   license
+   help
 
 
 Indices and tables
