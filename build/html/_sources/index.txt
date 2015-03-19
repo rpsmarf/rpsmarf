@@ -6,11 +6,15 @@
 Welcome to RPSMARF's documentation!
 ===================================
 
-Contents:
+Index Page for the RPSMARF Project
+==================================
+Guide:
 
 .. toctree::
    :maxdepth: 2
 
+    license
+    help
 
 
 Indices and tables
