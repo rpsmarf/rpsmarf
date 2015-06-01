@@ -3,11 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to RPSMARF's documentation!
-===================================
+Documentation for the Cloud Storage API 
+=======================================
 
-Index Page for the RPSMARF Project
-==================================
+Index Page for Cloud Storage API Documentation
+==============================================
 Guide:
 
 .. toctree::
