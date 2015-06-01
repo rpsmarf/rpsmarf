@@ -47,8 +47,8 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'RPSMARF'
-copyright = u'2015, Navdeep Kapoor'
-author = u'Navdeep Kapoor'
+copyright = u'2015, RPSMARF'
+author = u'RPSMARF'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
