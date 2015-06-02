@@ -29,8 +29,6 @@ Guide:
    -Delete Recursive
 
 
-
-
 Indices and tables
 ==================
 
