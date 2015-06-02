@@ -27,8 +27,8 @@ Guide:
    -Move
    -Delete a single file or folder
    -Delete Recursive
-
-
+   help
+   license
 
 
 Indices and tables
