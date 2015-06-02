@@ -1,2 +1,0 @@
-Service access endpoints
-========================

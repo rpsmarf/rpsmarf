@@ -3,32 +3,19 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Documentation for the Cloud Storage API 
-=======================================
+Welcome to the RPSMARF Project  
+==============================
 
-Index Page for Cloud Storage API Documentation
-==============================================
+Project Description
+===================
 Guide:
 
 .. toctree::
    :maxdepth: 2
 
-   Overview
-   Sending Requests to the API
-   Service access endpoints
-   Using the API directly by using curl
-    Creating a Resource
-    Upload a File
-    Metadata
-   -Make a Folder
-   -Zip
-   -Unzip
-   -Rename
-   -Move
-   -Delete a single file or folder
-   -Delete Recursive
-   help
-   license
+   Cloud Storage Service
+   Metadata Search Service
+   
 
 
 Indices and tables
