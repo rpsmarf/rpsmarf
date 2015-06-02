@@ -13,8 +13,22 @@ Guide:
 .. toctree::
    :maxdepth: 2
 
-   license
-   help
+   Overview
+   Sending Requests to the API
+   Service access endpoints
+   Using the API directly by using curl
+   -Creating a Resource
+   -Upload a File
+   -Metadata
+   -Make a Folder
+   -Zip
+   -Unzip
+   -Rename
+   -Move
+   -Delete a single file or folder
+   -Delete Recursive
+
+
 
 
 Indices and tables
