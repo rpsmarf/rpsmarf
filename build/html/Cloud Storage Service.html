@@ -51,55 +51,59 @@
             
   <div class="section" id="cloud-storage-service">
 <h1>Cloud Storage Service<a class="headerlink" href="#cloud-storage-service" title="Permalink to this headline">¶</a></h1>
-<p>Overview
-This Cloud Storage Service allows an application to integrate cloud storage into their application.  The application could then perform standard file system operations such as:
-•   list
-•   upload file
-•   download
-•   upload folder
-•   download folder
-•   mkdir
-•   delete
-•   rename
-Users can access the files via API calls (via an HTTP REST API) or via the RP-SMARF GUI.
-Users can also use the RSS authorization capabilities to allow other users to access files in the cloud for data sharing.
-This would allow applications to implement features such as:
-•   save data for a specific user from a process run in the cloud
-•   share data between users
-•   share data between sites for a single user</p>
-<p>Sample Applications
-These scenarios assume that the application administrator has installed the RSS software on their own servers.
-A desktop-resident application needs to implement a capability to allow users to share files. The application can suggest that its users acquire accounts and then put the end user’s email address and API key into the application.  With this in place, the tool could upload information for the user and view other users’ posted information (assuming the information can be public – if not then application can manage permissions or allow the end user to manage permissions via the RSS
-UI).  Users can also upload and download the files directly via the RSS UI
-A server-based application wants to allow users to upload large amounts of data for analysis by cloud-based applications.  The application can suggest that its users acquire RP-SMARF accounts and then put the end user’s email address and API key into the application.  The user can then use the RSS UI to upload the data (or other scripting-oriented tools) and then start the server-based application which will access the data by URL.</p>
-<p>Get a Trial Account
-In order to request a trial account with the RPSMARF system, send an email to <a class="reference external" href="mailto:support&#37;&#52;&#48;rpsmarf&#46;ca">support<span>&#64;</span>rpsmarf<span>&#46;</span>ca</a>. Once the trial account is created, you will get an email with details regarding your owner path like /scs/user/12/ for example. You will be provided with two resources: a private cloud folder and a public cloud folder. The private cloud folder will be accessible only to you whereas the public folder will be visible to other users of the RPSMARF system. Also you will be provided with an
-API Key to access the Cloud Storage API through REST calls via curl.
-Sample Sequences
-The sample sequences in this section demonstrate some of the few useful things you can do with the Cloud Storage API. In order to prevent providing the API key with every curl command, you may export it before trying out the sequences.
-The key may be exported as:
-export API_Key = API Key provided in the email
-The API Key may be used in the subsequent REST calls as $API_Key.
-As a first step, you can try to locate your private and public folders by browsing the resources that have you as the owner.
-curl –H “Authorization: ApiKey user_name:$API_Key”
-<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/">http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/</a>
-Once you have located your private folder and public folder you may try to make a new folder within the resource. If your public folder is /scs/resource/15/ for example, you can make a new folder named test in your public folder as follows:
-curl –H “Authorization: ApiKey user_name:$API_Key”
-<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/test/mkdir/">http://www.rpsmarf.ca/scs/resource/15/test/mkdir/</a>
-You can then do a list operation on the resource to see the newly created folder within the resource.
-curl –H “Authorization: ApiKey user_name:$API_Key”
-<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/list/">http://www.rpsmarf.ca/scs/resource/15/list/</a>
-You may try to upload a file in the current directory to the resource as follows:
-Assuming that there is a file called &#8220;x&#8221; in the working folder, you can do:</p>
-<p>curl –H “Authorization: ApiKey user_name:$API_Key”
--i –F uploadfile=&#64;x <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/upload/">http://www.rpsmarf.ca/scs/resource/15/newfile/upload/</a>
-When you do a list operation on the resource, you will see the uploaded file and the folder test.
-Next, you can try to download the uploaded file as follows:
-curl –H “Authorization: ApiKey user_name:$API_Key” <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/download/">http://www.rpsmarf.ca/scs/resource/15/newfile/download/</a>
-You may also delete the file as follows:
-curl -i -H &#8220;Accept: application/json&#8221; –H “Authorization: ApiKey user_name:$API_Key”  -X DELETE <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/file/">http://www.rpsmarf.ca/scs/resource/15/newfile/file/</a>
-On performing a list operation on the resource, you will no longer see the file newfile.
-The next section is a detailed reference guide for accessing the storage resource.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>This Cloud Storage Service allows an application to integrate cloud storage into their application.  The application could then perform standard file system operations such as list, upload file, download file, upload folder,download folder, make a directory, delete and rename.</p>
+<p>Users can access the files via API calls (via an HTTP REST API) or via the RP-SMARF GUI.</p>
+<p>Users can also use the RSS authorization capabilities to allow other users to access files in the cloud for data sharing.</p>
+<p>This would allow applications to implement features such as:</p>
+<ul class="simple">
+<li>save data for a specific user from a process run in the cloud</li>
+<li>share data between users</li>
+<li>share data between sites for a single user</li>
+</ul>
+</div>
+<div class="section" id="sample-applications">
+<h2>Sample Applications<a class="headerlink" href="#sample-applications" title="Permalink to this headline">¶</a></h2>
+<p>These scenarios assume that the application administrator has installed the RSS software on their own servers.</p>
+<p>A desktop-resident application needs to implement a capability to allow users to share files. The application can suggest that its users acquire accounts and then put the end user’s email address and API key into the application.  With this in place, the tool could upload information for the user and view other users’ posted information (assuming the information can be public – if not then application can manage permissions or allow the end user to manage permissions via the RSS UI).  Users can also upload and download the files directly via the RSS UI.</p>
+<p>A server-based application wants to allow users to upload large amounts of data for analysis by cloud-based applications.  The application can suggest that its users acquire RP-SMARF accounts and then put the end user’s email address and API key into the application.  The user can then use the RSS UI to upload the data (or other scripting-oriented tools) and then start the server-based application which will access the data by URL.</p>
+</div>
+<div class="section" id="get-a-trial-account">
+<h2>Get a Trial Account<a class="headerlink" href="#get-a-trial-account" title="Permalink to this headline">¶</a></h2>
+<p>In order to request a trial account with the RPSMARF system, send an email to <a class="reference external" href="mailto:support&#37;&#52;&#48;rpsmarf&#46;ca">support<span>&#64;</span>rpsmarf<span>&#46;</span>ca</a>. Once the trial account is created, you will get an email with details regarding your owner path like /scs/user/12/ for example. You will be provided with two resources: a private cloud folder and a public cloud folder. The private cloud folder will be accessible only to you whereas the public folder will be visible to other users of the RPSMARF system. Also you will be provided with an API Key to access the Cloud Storage API through REST calls via curl.</p>
+</div>
+<div class="section" id="sample-sequences">
+<h2>Sample Sequences<a class="headerlink" href="#sample-sequences" title="Permalink to this headline">¶</a></h2>
+<p>The sample sequences in this section demonstrate some of the few useful things you can do with the Cloud Storage API.</p>
+<p>In order to prevent providing the API key with every curl command, you may export it before trying out the sequences.</p>
+<p>The key may be exported as:</p>
+<blockquote>
+<div>export API_Key = API Key provided in the email</div></blockquote>
+<p>The API Key may be used in the subsequent REST calls as $API_Key.</p>
+<p>As a first step, you can try to locate your private and public folders by browsing the resources that have you as the owner.</p>
+<blockquote>
+<div>curl –H “Authorization: ApiKey user_name:$API_Key” <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/">http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/</a></div></blockquote>
+<p>Once you have located your private folder and public folder you may try to make a new folder within the resource. If your public folder is /scs/resource/15/ for example, you can make a new folder named test in your public folder as follows:</p>
+<blockquote>
+<div>curl –H “Authorization: ApiKey user_name:$API_Key” <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/test/mkdir/">http://www.rpsmarf.ca/scs/resource/15/test/mkdir/</a></div></blockquote>
+<p>You can then do a list operation on the resource to see the newly created folder within the resource.</p>
+<blockquote>
+<div>curl –H “Authorization: ApiKey user_name:$API_Key” <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/list/">http://www.rpsmarf.ca/scs/resource/15/list/</a></div></blockquote>
+<p>You may try to upload a file in the current directory to the resource as follows:</p>
+<p>Assuming that there is a file called &#8220;x&#8221; in the working folder, you can do:</p>
+<blockquote>
+<div>curl –H “Authorization: ApiKey user_name:$API_Key” -i –F uploadfile=&#64;x <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/upload/">http://www.rpsmarf.ca/scs/resource/15/newfile/upload/</a></div></blockquote>
+<p>When you do a list operation on the resource, you will see the uploaded file and the folder test.</p>
+<p>Next, you can try to download the uploaded file as follows:</p>
+<blockquote>
+<div>curl –H “Authorization: ApiKey user_name:$API_Key” <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/download/">http://www.rpsmarf.ca/scs/resource/15/newfile/download/</a></div></blockquote>
+<p>You may also delete the file as follows:</p>
+<blockquote>
+<div>curl -i -H &#8220;Accept: application/json&#8221; –H “Authorization: ApiKey user_name:$API_Key”  -X DELETE <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/file/">http://www.rpsmarf.ca/scs/resource/15/newfile/file/</a></div></blockquote>
+<p>On performing a list operation on the resource, you will no longer see the file newfile.</p>
+<p>The next section is a detailed reference guide for accessing the storage resource.</p>
+</div>
 </div>
 
 
@@ -108,6 +112,17 @@ The next section is a detailed reference guide for accessing the storage resourc
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Cloud Storage Service</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#sample-applications">Sample Applications</a></li>
+<li><a class="reference internal" href="#get-a-trial-account">Get a Trial Account</a></li>
+<li><a class="reference internal" href="#sample-sequences">Sample Sequences</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="index.html"
                         title="previous chapter">Welcome to the RPSMARF Project</a></p>
