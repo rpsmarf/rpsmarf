@@ -73,30 +73,26 @@ Users can access the files via API calls (via an HTTP REST API). Users can also 
 </div>
 <div class="section" id="sample-sequences">
 <h2>Sample Sequences<a class="headerlink" href="#sample-sequences" title="Permalink to this headline">¶</a></h2>
-<p>The sample sequences in this section demonstrate some of the few useful things you can do with the Cloud Storage API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences.
-The key may be exported as:
-export API_Key=”Authorization: ApiKey user_name:Key”
-where Key and user_name are provided in the email.
-The API_Key may be used in the subsequent REST calls as $API_Key.
-As a first step, you can try to locate your private and public folders by browsing the resources that have you as the owner.
-curl –H “$API_Key” “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/">http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/</a>”
-Once you have located your private folder and public folder you may try to make a new folder within the resource. If your public folder is /scs/resource/15/ for example, you can make a new folder named test in your public folder as follows:
-curl –H “$API_Key”
-“<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/test/mkdir/">http://www.rpsmarf.ca/scs/resource/15/test/mkdir/</a>”
-You can then do a list operation on the resource to see the newly created folder within the resource.
-curl –H “$API_Key”
-“<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/list/">http://www.rpsmarf.ca/scs/resource/15/list/</a>”
-You may try to upload a file in the current directory to the resource as follows:
-Assuming that there is a file called &#8220;x&#8221; in the working folder, you can do:</p>
-<p>curl –H “$API_Key”
--i –F uploadfile=&#64;x “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/upload/">http://www.rpsmarf.ca/scs/resource/15/newfile/upload/</a>”
-When you do a list operation on the resource, you will see the uploaded file and the folder test.
-Next, you can try to download the uploaded file as follows:
-curl –H “$API_Key” <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/download/">http://www.rpsmarf.ca/scs/resource/15/newfile/download/</a>
-You may also delete the file as follows:
-curl -i -H &#8220;Accept: application/json&#8221; –H “$API_Key” -X DELETE  “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/file/">http://www.rpsmarf.ca/scs/resource/15/newfile/file/</a>”
-On performing a list operation on the resource, you will no longer see the file newfile.
-The next section is a detailed reference guide for accessing the storage resource.</p>
+<p>The sample sequences in this section demonstrate some of the few useful things you can do with the Cloud Storage API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences.</p>
+<p>The key may be exported as:</p>
+<p>export API_Key=”Authorization: ApiKey user_name:Key”</p>
+<p>Please note that key and user_name will be provided in the email.</p>
+<p>The API_Key may be used in the subsequent REST calls as $API_Key.</p>
+<p>As a first step, you can try to locate your private and public folders by browsing the resources that have you as the owner.</p>
+<p>$ curl –H “$API_Key” “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/">http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/</a>”</p>
+<p>Once you have located your private folder and public folder you may try to make a new folder within the resource. If your public folder is /scs/resource/15/ for example, you can make a new folder named test in your public folder as follows:</p>
+<p>curl –H “$API_Key” “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/test/mkdir/">http://www.rpsmarf.ca/scs/resource/15/test/mkdir/</a>”</p>
+<p>You can then do a list operation on the resource to see the newly created folder within the resource.</p>
+<p>$ curl –H “$API_Key” “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/list/">http://www.rpsmarf.ca/scs/resource/15/list/</a>”</p>
+<p>You may try to upload a file in the current directory to the resource as follows:</p>
+<p>Assuming that there is a file called &#8220;x&#8221; in the working folder, you can do:</p>
+<p>$ curl –H “$API_Key” -i –F uploadfile=&#64;x “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/upload/">http://www.rpsmarf.ca/scs/resource/15/newfile/upload/</a>”</p>
+<p>When you do a list operation on the resource, you will see the uploaded file and the folder test.</p>
+<p>Next, you can try to download the uploaded file as follows:</p>
+<p>$ curl –H “$API_Key” <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/download/">http://www.rpsmarf.ca/scs/resource/15/newfile/download/</a></p>
+<p>You may also delete the file as follows:</p>
+<p>$ curl -i -H &#8220;Accept: application/json&#8221; –H “$API_Key” -X DELETE  “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/file/">http://www.rpsmarf.ca/scs/resource/15/newfile/file/</a>”</p>
+<p>On performing a list operation on the resource, you will no longer see the file newfile.</p>
 <p>The next section is a detailed reference guide for accessing the storage resource.</p>
 </div>
 <div class="section" id="reference-guide">
@@ -144,7 +140,7 @@ For example:
 <li>lastPathReturned: This parameter specifies the next path to return in a &#8216;paged&#8217; listing of files. This is done by setting this parameter to the path of the last file/folder returned and the list operation will return entries which occur after the path specified by this parameter. This parameter is of type string and its default value is &#8220;&#8221;.</li>
 </ol>
 <p><strong>List Examples</strong></p>
-<p>curl –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/">http://demo.rpsmarf.ca/scs/resource/3/list/</a>”
+<p>$ curl –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/">http://demo.rpsmarf.ca/scs/resource/3/list/</a>”
 [
 {
 &#8220;basename&#8221;: &#8220;101_data/&#8221;,
@@ -169,7 +165,7 @@ For example:
 },
 ...</p>
 <p>Listing files, one by one:</p>
-<p>curl –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1">http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1</a>”
+<p>$ curl –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1">http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1</a>”
 [
 {
 &#8220;basename&#8221;: &#8220;101_data/&#8221;,
@@ -179,7 +175,7 @@ For example:
 &#8220;size&#8221;: 0
 }
 ]</p>
-<p>curl –H “$API_Key” &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1&amp;lastPathReturned=101_data/">http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1&amp;lastPathReturned=101_data/</a>&#8221;
+<p>$ curl –H “$API_Key” &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1&amp;lastPathReturned=101_data/">http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1&amp;lastPathReturned=101_data/</a>&#8221;
 [
 {
 &#8220;basename&#8221;: &#8220;2014-09-01.data&#8221;,
@@ -192,7 +188,7 @@ For example:
 <p><strong>Download</strong></p>
 <p>The download operation downloads a file within the resource.</p>
 <p><strong>Download Example</strong></p>
-<p>curl –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/download/">http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/download/</a>”
+<p>$ curl –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/download/">http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/download/</a>”
 {
 &#8220;segmentSize&#8221; : 0.04    &lt;&#8211; Actual file contents
 }</p>
@@ -205,13 +201,7 @@ For example:
 </li>
 <li><dl class="first docutils">
 <dt>Overwrite: If False then if the file path specified already exists, the upload operation fails. If True, then if the file exists, that file is atomically replaced with the uploaded file. The default is False.</dt>
-<dd><blockquote class="first">
-<div><blockquote>
-<div><p>The return data for upload is as follows:</p>
-</div></blockquote>
-<p>{                                                                                                                                                                &#8220;path&#8221;: &#8220;&lt;path of file uploaded - if makeTempPath was true, this is how to get the path generated&gt;&#8221;</p>
-</div></blockquote>
-<p class="last">}</p>
+<dd><p class="first last">The return data for upload is as follows:                                                                                {                                                                                                                                                        &#8220;path&#8221;: &#8220;&lt;path of file uploaded - if makeTempPath was true, this is how to get the path generated&gt;&#8221;                                                     }</p>
 </dd>
 </dl>
 </li>
@@ -220,7 +210,7 @@ For example:
 <dt><strong>Upload Examples</strong></dt>
 <dd>Assuming that there is a file called &#8220;x&#8221; in the working folder, you can do:</dd>
 </dl>
-<p>curl –H “$API_Key”  -i -F uploadfile=&#64;x <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/test/upload/">http://demo.rpsmarf.ca/scs/resource/1/test/upload/</a></p>
+<p>$ curl –H “$API_Key”  -i -F uploadfile=&#64;x <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/test/upload/">http://demo.rpsmarf.ca/scs/resource/1/test/upload/</a></p>
 <p>HTTP/1.1 100 Continue
 HTTP/1.1 200 OK
 Server: nginx/1.6.2
@@ -283,6 +273,279 @@ X-Frame-Options: SAMEORIGIN
 <p><strong>Zip Example</strong></p>
 <p>$ curl –H “Authorization: ApiKey user_name:$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/f1/zip/?makeTempPath=True">http://demo.rpsmarf.ca/scs/resource/1/f1/zip/?makeTempPath=True</a>”
 {&#8220;zipFilePath&#8221;: &#8221;.rpsmarf/tmp/8329c3ca-1f03-4351-8984-2fddc8a18514.zip&#8221;, &#8220;taskPath&#8221;: &#8220;/scs/task/1/&#8221;}</p>
+<p><strong>Unzip</strong></p>
+<p>The unzip operation enables you to unzip a zipped file.</p>
+<p><strong>Unzip Parameters</strong></p>
+<p>The various parameters of the zip operation are:</p>
+<ol class="arabic simple">
+<li>zipFilePath: This is the path of the file to unzip into the folder specified in the request. This parameter is of the type string and its default value is “”.</li>
+</ol>
+<p>Return Data:
+{
+&#8220;taskPath&#8221;: &#8220;&lt;path to task running the unzip operation, e.g.: /scs/task/77&gt;&#8221;
+}</p>
+<p><strong>Unzip Example</strong></p>
+<p>$ curl –H “$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/f1/unzip/?zipFilePath=.rpsmarf/tmp/e8970d5d-3fef-4bcb-9637-9b4c05949f27.zip">http://demo.rpsmarf.ca/scs/resource/1/f1/unzip/?zipFilePath=.rpsmarf/tmp/e8970d5d-3fef-4bcb-9637-9b4c05949f27.zip</a>”</p>
+<p>{&#8220;taskPath&#8221;: &#8220;/scs/task/2/&#8221;}</p>
+<p>$ curl –H “Authorization: ApiKey user_name:$API_Key”  <a class="reference external" href="http://demo.rpsmarf.ca/scs/task/2/">http://demo.rpsmarf.ca/scs/task/2/</a>
+{
+&#8220;completion&#8221;: &#8220;completedWithoutError&#8221;,
+...
+&#8220;completionReason&#8221;: &#8220;success&#8221;,
+...
+&#8220;state&#8221;: &#8220;finished&#8221;,
+...
+}</p>
+</div>
+<div class="section" id="rename">
+<h2>Rename<a class="headerlink" href="#rename" title="Permalink to this headline">¶</a></h2>
+<p>The rename operation enables you to rename a file in a specific folder. The file stays in the same folder.</p>
+<p><strong>Rename Parameters</strong></p>
+<p>The parameters for the rename operation are:</p>
+<ol class="arabic simple">
+<li>newName: This is the new name of the file whose path is specified. This parameter is of the type string.</li>
+</ol>
+<p><strong>Return Data</strong>
+{</p>
+<p>}</p>
+<p><strong>Rename Example</strong></p>
+<p>$curl –H “$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/f1/rename/?newName=f2">http://demo.rpsmarf.ca/scs/resource/1/f1/rename/?newName=f2</a>”</p>
+<p>{}</p>
+<p><strong>Move</strong></p>
+<p>This API moves a file in a folder to another folder, possibly with a new name.</p>
+<p><strong>Move Parameters</strong></p>
+<p>The parameters for the Move operation are:</p>
+<ol class="arabic simple">
+<li>newPath: This is the new path of the file whose path is specified.</li>
+</ol>
+<p>** Return Data**
+{</p>
+<p>}</p>
+<p><strong>Move Example</strong></p>
+<p>$ curl –H “$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/move/?newPath=a/c/f2">http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/move/?newPath=a/c/f2</a>”</p>
+<p>{}</p>
+<p><strong>Delete Single File or Folder Operation</strong></p>
+<p>This call deletes a single file or folder (which must be empty).</p>
+<p>The path after the resource path contains the path to the file or folder to delete followed by /file/ if the path is for a file or /folder/ if the path is a folder.</p>
+<p><strong>Delete Example</strong></p>
+<p>To delete the folder xx within /scs/resource/1/</p>
+<p>$ curl -i -H &#8220;Accept: application/json&#8221; –H “$API_Key” –X DELETE “<a class="reference external" href="http://localhost/scs/resource/1/xx/folder/">http://localhost/scs/resource/1/xx/folder/</a>”</p>
+<p>HTTP/1.1 204 NO CONTENT
+...</p>
+<p><strong>Example of error (deleting a file as a folder)</strong></p>
+<p>curl-i -H &#8220;Accept: application/json&#8221; –H “$API_Key” -X DELETE “<a class="reference external" href="http://localhost/scs/resource/1/z/folder/">http://localhost/scs/resource/1/z/folder/</a>”</p>
+<p>HTTP/1.1 422 OK
+...
+{&#8220;osPath&#8221;: &#8220;/tmp/src/z/&#8221;, &#8220;description&#8221;: &#8220;Not a directory&#8221;, &#8220;code&#8221;: &#8220;ENOTDIR&#8221;, &#8220;apiPathName&#8221;: &#8220;z/&#8221;, &#8220;operation&#8221;: &#8220;delete&#8221;}</p>
+<p><strong>Delete Recursive Operation</strong></p>
+<p>This function starts a task which will recursively delete the folder specified.</p>
+<p>There are no parameters beside the path.</p>
+<p><strong>Delete Recursive Example</strong></p>
+<p>$ curl -v –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/deleterecursive/">http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/deleterecursive/</a>”</p>
+<p>{&#8220;taskPath&#8221;: &#8220;/scs/task/2/&#8221;}</p>
+<p>$ curl –H “$API_Key” <a class="reference external" href="http://demo.rpsmarf.ca/scs/task/2/">http://demo.rpsmarf.ca/scs/task/2/</a></p>
+<p>{
+&#8220;completion&#8221;: &#8220;completedWithoutError&#8221;,
+...
+&#8220;completionReason&#8221;: &#8220;success&#8221;,
+...
+&#8220;state&#8221;: &#8220;finished&#8221;,
+...
+}</p>
+<p><strong>Set User Permissions to Access a Resource</strong></p>
+<p>The setperm command sets the permissions to access a resource.</p>
+<p><strong>Set User Permissions Parameters</strong></p>
+<p>The various parameters of the setperm command are:</p>
+<ol class="arabic simple">
+<li>user: This is the path of the user (e.g. /scs/user/1/) whose permissions are being altered. This parameter is of the type string.</li>
+<li>action: This parameter is of the type string and can take the values assign which sets the permission(s) defined or remove which deletes the permission(s) specified.</li>
+<li>perm: This parameter is also of the type string and can be any combination (in any order) of &#8220;r&#8221;, &#8220;w&#8221; and &#8220;x&#8221; where “r” indicates read permission, “w” indicates write permission and “x” indicates execute (aka run) permission.</li>
+</ol>
+<p><strong>Set User Permission Example</strong></p>
+<p>$ curl -H “$API-Key” &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/setperm/?user=/scs/user/1/&amp;perm=rw&amp;action=assign">http://demo.rpsmarf.ca/scs/resource/1/setperm/?user=/scs/user/1/&amp;perm=rw&amp;action=assign</a>&#8220;</p>
+<p><strong>Get User Permissions to Access a Resource</strong></p>
+<p>The getperm command gets the permissions users have to access a resource.</p>
+<p><strong>Get User Permission Parameters</strong></p>
+<p>There are no parameters for the getperm request.
+<strong>Get User Permission Example</strong></p>
+<p>curl -H “$API-Key” &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/getperm/">http://demo.rpsmarf.ca/scs/resource/1/getperm/</a>&#8220;</p>
+<p>{
+&#8220;/scs/user/1/&#8221;: [
+&#8220;add_smmodelresource&#8221;,
+&#8220;change_smmodelresource&#8221;,
+&#8220;delete_smmodelresource&#8221;,
+&#8220;read_resource_data&#8221;,
+&#8220;execute_on_resource&#8221;,
+&#8220;write_resource_data&#8221;
+],
+&#8220;/scs/user/2/&#8221;: [
+&#8220;execute_on_resource&#8221;
+]
+}</p>
+</div>
+<div class="section" id="deploying-services">
+<h2>Deploying Services<a class="headerlink" href="#deploying-services" title="Permalink to this headline">¶</a></h2>
+<p>This section describes how you can log in to the DAIR cloud, set up a target VM, use the VM to run the RPSMARF software on it and then set up a new remote agent and a container.</p>
+<p><strong>Request Access to the DAIR Cloud Server</strong></p>
+<p>In order to log in to the DAIR cloud server, please go to <a class="reference external" href="http://fluidsurveys.com/s/DAIRsubmission/">http://fluidsurveys.com/s/DAIRsubmission/</a> and submit a request.
+Once you have received the credentials to log in to the DAIR cloud server go to <a class="reference external" href="https://nova-ab.dair-atir.canarie.ca/">https://nova-ab.dair-atir.canarie.ca/</a> and log in with your credentials.</p>
+<p><strong>Create VMs in DAIR</strong></p>
+<p>This section describes how to create a VM in the DAIR cloud.</p>
+<ol class="arabic">
+<li><p class="first">Create a key pair.</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Accessed through &#8220;Access &amp; Security&#8221; -&gt; &#8220;Keypairs&#8221;.  When a key pair is created you will download a .pem file. This file will be used to access the VM through ssh. Keep this private!</li>
+<li>Click &#8216;Create Keypair&#8221;.</li>
+<li>Enter in the name of your key pair.</li>
+<li>Click &#8220;Create Keypair&#8221; in the modal window.</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Add rules to the default security group or add security group with rules. Rules specify which ports are opened (all closed by default).</p>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p class="first">Accessed through &#8220;Access &amp; Security&#8221; -&gt; &#8220;Security Groups&#8221;.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Adding SSH:</dt>
+<dd><ol class="first last lowerroman simple">
+<li>On &#8220;default&#8221; security group click &#8220;Edit Rules&#8221;.</li>
+<li>Click &#8220;Add Rule&#8221;. Modal window will pop up.</li>
+<li>For &#8220;Protocol&#8221; select &#8220;TCP&#8221;.</li>
+<li>For &#8220;Open&#8221; select &#8220;Port&#8221;.</li>
+<li>For &#8220;Port&#8221; enter &#8220;22&#8221;.</li>
+<li>For &#8220;Source&#8221; select &#8220;CIDR&#8221;.</li>
+<li>For &#8220;CIDR&#8221; enter IP Addresses allowed to access the instance. Default of 0.0.0.0/0 will allows all addresses.</li>
+<li>Click &#8220;Add&#8221;.</li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Launch an instance.</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Accessed through &#8220;Instances&#8221;.</li>
+<li>Click &#8220;Launch Instance&#8221;.</li>
+<li>In the modal window that pops up input the details. In the &#8220;Details&#8221; section input information such as name and the type of VM to run the image on. Additionally you can select from a selection of images.</li>
+<li>For &#8220;Image&#8221; select Ubuntu 12.04.</li>
+<li>In the &#8220;Access and Security&#8221; section select your key pair (very important!).</li>
+<li>If needed add details for &#8220;Volume Options&#8221; and &#8220;Post-creation&#8221;. Volume options allows you to launch with attached storage. Post-creation allows you to upload scripts that will run once the VM boots. Can be used for some configuration.</li>
+<li>NOTE: if you created an instance from one of the default images</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">Assign an IP address to your Instance.</p>
+<ol class="loweralpha simple">
+<li>Accessed through &#8220;Access and Security&#8221; -&gt; &#8220;Floating IPs&#8221;.</li>
+<li>Click &#8220;Allocate IP to Project&#8221;. Select pool as &#8220;nova&#8221; and click &#8220;Allocate IP&#8221;.</li>
+<li>Select &#8220;Instances&#8221; on left hand dashboard nav.</li>
+<li>For the desired instance Click &#8220;Associate Floating IP&#8221;, in the modal window select the Instance and the IP that you wish to assign to the selected instance.</li>
+<li>Click &#8220;Associate&#8221;.</li>
+</ol>
+</li>
+<li><p class="first">Accessing Instance through SSH (from a Linux machine).</p>
+<ol class="loweralpha simple">
+<li>Open command prompt.</li>
+<li>Enter &#8220;ssh -i /path/to/keypair.pem <a class="reference external" href="mailto:ubuntu&#37;&#52;&#48;ip&#46;address">ubuntu<span>&#64;</span>ip<span>&#46;</span>address</a>&#8220;</li>
+<li>/path/to/keypair.pem should be the path to your downloaded .pem file (key pair)</li>
+<li>ip.address is the floating ip address you gave to your instance.</li>
+<li>ubuntu is the default user when creating an ubuntu instance.</li>
+</ol>
+</li>
+</ol>
+<p><strong>How to use a VM in DAIR and run the Service Software on it</strong></p>
+<p>This section describes how to take a vanilla Ubuntu 14.04 VM in DAIR and run the SMARF software on it.</p>
+<ol class="arabic simple">
+<li>Log in to the DAIR system</li>
+<li>Set the region to quebec or alberta via the pull-down selection in the upper right-hand region - note quebec should be faster for most purposes.</li>
+<li>Create a VM in DAIR  by doing:<ol class="loweralpha">
+<li>Select Launch Instance by pressing the button on top right</li>
+<li>Set Instance Boot Source to Snapshot</li>
+<li>Set the Instance Snapshot to rpsmarf_ubuntu_14_04</li>
+<li>Set Instance Name to &lt;tag&gt;.rpsmarf.ca</li>
+<li>Set the Flavor to m1.small</li>
+<li>Click Launch</li>
+<li>If required allocate a floating IP address by
+i.  waiting until the node is up
+ii. clicking on Access and Security on the left hand side and selecting the Floating IPs tab. Click on Allocate IPs to Project.</li>
+<li>Wait for the node to boot and then under the More button choose Associate Floating IP and associate an IP address.</li>
+<li>If required,go to GoDaddy and set up a name for this IP address.</li>
+</ol>
+</li>
+<li>SSH to the node by doing sshto &lt;tag&gt; e.g. sshto test to access test.rpsmarf.ca in your Ubuntu development VM</li>
+</ol>
+<p><strong>Setting Up a New Remote Agent</strong></p>
+<p>This section describes how to setup a new remote agent and get it connected to the SCS that will control it.</p>
+<p>1.  SSH to the newly created node
+2.</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>sudo emacs /etc/hosts and add:</li>
+<li>&lt;private IP address of the SCS node&gt; &lt;hostname of the SCS node&gt;</li>
+<li>For example:</li>
+<li>10.0.82.6 demo.rpsmarf.ca</li>
+</ol>
+</div></blockquote>
+<ol class="arabic" start="3">
+<li><p class="first">Install SRA</p>
+<ol class="loweralpha simple">
+<li>sudo apt-get install smarf-sra</li>
+</ol>
+</li>
+<li><p class="first">sudo emacs /etc/smarf-sra/sra.conf and add:</p>
+<ol class="loweralpha simple">
+<li>export AGENT_GUID=&lt;name of remote agent&gt;      &lt;&#8211; note this name must match the name in the agent object created in the steps below</li>
+<li>export SCS_HOST_NAME=&lt;host name of the Control Server&gt; (e.g. demo.rpsmarf.ca)</li>
+</ol>
+</li>
+<li><p class="first">sudo service smarf-sra restart</p>
+</li>
+<li><p class="first">Exit the shell</p>
+</li>
+<li><p class="first">SSH to the SCS node</p>
+</li>
+<li><p class="first">Create the agent object using the REST API.</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key”-d &#8216;{&#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;, &#8220;name&#8221;: &#8220;&lt;name&gt;&#8221;, &#8220;guid&#8221;:&#8221;&lt;name of remote agent in sra.conf&gt;&#8221;,&#8221;agentUrl&#8221;:&#8221;ice://&lt;hostname of remote agent&gt;&#8221;} &#8216; “http://localhost/scs/agent/”</li>
+<li>Check the result and status after 15 seconds or so and we should see the status go to &#8220;up&#8221; as the remote agent registers with the SCS (assuming it is running):</li>
+</ol>
+<p>$ curl -H “$API-Key” <a class="reference external" href="http://demo/scs/agent/2/">http://demo/scs/agent/2/</a>  &lt;&#8211; Use value returned in step a</p>
+</div></blockquote>
+</li>
+</ol>
+<p><strong>Setting up a Container</strong></p>
+<p>Next we create a container which refers to the agent just created.</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{ &#8220;name&#8221;: &#8220;Alberta Container&#8221;, &#8220;name_key&#8221;: &#8220;testab1_tmp&#8221;, &#8220;containerUrl&#8221;:&#8221;local://localhost/tmp&#8221;, &#8220;agent&#8221;: &#8220;/scs/agent/2/&#8221;} &#8216; “http://demo.rpsmarf.ca/scs/container/”</p>
+<p>After setting up the container, you can create your own storage resources within the container.</p>
+<p><strong>Resource Types and Resources</strong></p>
+<p>You may create a new resource type by doing the following:</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;tool_copy_source&#8221;, &#8220;nature&#8221;: &#8220;data&#8221;, &#8220;description&#8221;: &#8220;This is a source of copy data&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource_type/">http://demo.rpsmarf.ca/scs/resource_type/</a></p>
+<p>Please note that storage resources have the type data.</p>
+<p>HTTP/1.1 201 CREATED
+Server: nginx/1.6.2
+Date: Fri, 21 Nov 2014 18:05:04 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource_type/1/">http://demo.rpsmarf.ca/scs/resource_type/1/</a>
+Vary: Accept
+X-Frame-Options: SAMEORIGIN</p>
+<p>A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/.</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;data_repo&#8221;,&#8221;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;container&#8221;: &#8220;/scs/container/1/&#8221;, &#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/">http://demo.rpsmarf.ca/scs/resource/</a>
+HTTP/1.1 201 CREATED
+Server: nginx/1.6.2
+Date: Fri, 21 Nov 2014 18:58:16 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/">http://demo.rpsmarf.ca/scs/resource/1/</a>
+Vary: Accept
+X-Frame-Options: SAMEORIGIN</p>
 </div>
 </div>
 
@@ -300,6 +563,8 @@ X-Frame-Options: SAMEORIGIN
 <li><a class="reference internal" href="#get-a-trial-account">Get a Trial Account</a></li>
 <li><a class="reference internal" href="#sample-sequences">Sample Sequences</a></li>
 <li><a class="reference internal" href="#reference-guide">Reference Guide</a></li>
+<li><a class="reference internal" href="#rename">Rename</a></li>
+<li><a class="reference internal" href="#deploying-services">Deploying Services</a></li>
 </ul>
 </li>
 </ul>
