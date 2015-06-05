@@ -296,9 +296,7 @@ X-Frame-Options: SAMEORIGIN
 &#8220;state&#8221;: &#8220;finished&#8221;,
 ...
 }</p>
-</div>
-<div class="section" id="rename">
-<h2>Rename<a class="headerlink" href="#rename" title="Permalink to this headline">¶</a></h2>
+<p><strong>Rename</strong></p>
 <p>The rename operation enables you to rename a file in a specific folder. The file stays in the same folder.</p>
 <p><strong>Rename Parameters</strong></p>
 <p>The parameters for the rename operation are:</p>
@@ -523,7 +521,7 @@ ii. clicking on Access and Security on the left hand side and selecting the Floa
 <p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{ &#8220;name&#8221;: &#8220;Alberta Container&#8221;, &#8220;name_key&#8221;: &#8220;testab1_tmp&#8221;, &#8220;containerUrl&#8221;:&#8221;local://localhost/tmp&#8221;, &#8220;agent&#8221;: &#8220;/scs/agent/2/&#8221;} &#8216; “http://demo.rpsmarf.ca/scs/container/”</p>
 <p>After setting up the container, you can create your own storage resources within the container.</p>
 <p><strong>Resource Types and Resources</strong></p>
-<p>You may create a new resource type by doing the following:</p>
+<p>You may create a new resource type by doing the following. Please note that storage resources have the type data.</p>
 <p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;tool_copy_source&#8221;, &#8220;nature&#8221;: &#8220;data&#8221;, &#8220;description&#8221;: &#8220;This is a source of copy data&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource_type/">http://demo.rpsmarf.ca/scs/resource_type/</a></p>
 <p>Please note that storage resources have the type data.</p>
 <p>HTTP/1.1 201 CREATED
@@ -536,8 +534,8 @@ Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resourc
 Vary: Accept
 X-Frame-Options: SAMEORIGIN</p>
 <p>A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/.</p>
-<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;data_repo&#8221;,&#8221;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;container&#8221;: &#8220;/scs/container/1/&#8221;, &#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/">http://demo.rpsmarf.ca/scs/resource/</a>
-HTTP/1.1 201 CREATED
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;data_repo&#8221;,&#8221;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;container&#8221;: &#8220;/scs/container/1/&#8221;, &#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/">http://demo.rpsmarf.ca/scs/resource/</a></p>
+<p>HTTP/1.1 201 CREATED
 Server: nginx/1.6.2
 Date: Fri, 21 Nov 2014 18:58:16 GMT
 Content-Type: text/html; charset=utf-8
@@ -563,7 +561,6 @@ X-Frame-Options: SAMEORIGIN</p>
 <li><a class="reference internal" href="#get-a-trial-account">Get a Trial Account</a></li>
 <li><a class="reference internal" href="#sample-sequences">Sample Sequences</a></li>
 <li><a class="reference internal" href="#reference-guide">Reference Guide</a></li>
-<li><a class="reference internal" href="#rename">Rename</a></li>
 <li><a class="reference internal" href="#deploying-services">Deploying Services</a></li>
 </ul>
 </li>

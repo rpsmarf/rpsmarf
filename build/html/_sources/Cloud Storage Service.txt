@@ -319,8 +319,8 @@ $ curl –H “Authorization: ApiKey user_name:$API_Key”  http://demo.rpsmarf.
 ...
 }
 
-Rename
-------
+**Rename**
+
 The rename operation enables you to rename a file in a specific folder. The file stays in the same folder.
 
 **Rename Parameters**
@@ -573,7 +573,7 @@ After setting up the container, you can create your own storage resources within
 
 **Resource Types and Resources**
 
-You may create a new resource type by doing the following:
+You may create a new resource type by doing the following. Please note that storage resources have the type data.
 
 $ curl -i -H "Content-Type: application/json" –H “$API_Key” -d '{"name": "tool_copy_source", "nature": "data", "description": "This is a source of copy data"}' http://demo.rpsmarf.ca/scs/resource_type/
 
@@ -593,6 +593,7 @@ X-Frame-Options: SAMEORIGIN
 A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/.
 
 $ curl -i -H "Content-Type: application/json" -H “$API_Key” -d '{"name": "data_repo","resource_type": "/scs/resource_type/1/", "container": "/scs/container/1/", "owner": "/scs/user/1/"}' http://demo.rpsmarf.ca/scs/resource/
+
 HTTP/1.1 201 CREATED
 Server: nginx/1.6.2
 Date: Fri, 21 Nov 2014 18:58:16 GMT
