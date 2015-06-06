@@ -47,6 +47,324 @@
             
   <div class="section" id="metadata-search-service">
 <h1>Metadata Search Service<a class="headerlink" href="#metadata-search-service" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The Metadata Search API feature allows an application to upload metadata from their application. The users can then issue queries via the REST API and then use the resulting list of matching URLs within the invoking application.</p>
+<p>Metadata is &#8220;data about data&#8221;.  Users can add metadata about files contained in resources and then search the metadata for files which match specified criteria.</p>
+<p>For example, within a set of bridge monitoring files there is information about wind speed and wind direction.  A metadata extraction process will extract the metadata for each file and upload the metadata to the metadata repository. When a researcher wants to examine the behaviour of the structure when the wind speed is over 50 km/h from the south-east to south-west direction (i.e. 135 to 225 degrees from north), he can perform a search which will examine the extracted metadata and show the researcher a list of files which match these criteria.  The researcher can then perform analysis with these data files.</p>
+</div>
+<div class="section" id="sample-applications">
+<h2>Sample Applications<a class="headerlink" href="#sample-applications" title="Permalink to this headline">¶</a></h2>
+<p>A desktop-resident application needs to implement sophisticated data searching. The application can suggest that its users acquire accounts and then put the end user’s email address and API key into the application.  With this in place, the tool could extract metadata from files on the PC and upload this metadata to the server.  The application could then perform a search by submitting the user-specified search parameters to the server and then allow the user to browse the results.</p>
+<p>A domain-specific server-based application which stores user data in the server or elsewhere extracts metadata from the files stored in the network and uploads this metadata to the servers.  Users could perform searches and download data which matches the search criteria.</p>
+</div>
+<div class="section" id="get-a-trial-account">
+<h2>Get a Trial Account<a class="headerlink" href="#get-a-trial-account" title="Permalink to this headline">¶</a></h2>
+<p>If you are not already an RPSMARF system user, you can request a trial account with the RPSMARF system by sending an email to <a class="reference external" href="mailto:support&#37;&#52;&#48;rpsmarf&#46;ca">support<span>&#64;</span>rpsmarf<span>&#46;</span>ca</a>. Once the trial account is created, you will get an email with details regarding your owner path like /scs/user/12/ for example. You will also be provided two resources: a private cloud folder and a public cloud folder. The private cloud folder will be accessible only to you whereas the public folder will be visible to other users of the RPSMARF system. Also you will be provided with an API Key to access the Metadata Search API through REST calls via curl.</p>
+</div>
+<div class="section" id="reference-guide-sample-sequences">
+<h2>Reference Guide/Sample Sequences<a class="headerlink" href="#reference-guide-sample-sequences" title="Permalink to this headline">¶</a></h2>
+<p>The sample sequences in this section demonstrate some of the few useful things you can do with the Cloud Storage API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences.</p>
+<p>The key may be exported as:</p>
+<p>export API_Key=”Authorization: ApiKey user_name:Key”
+where Key and user_name are provided in the email.</p>
+<p>The API_Key may be used in the subsequent REST calls as $API_Key.</p>
+<p>As mentioned in the previous section, you will be provided two resources, a private cloud folder and a public cloud folder when requesting a trial account. These folders are storage resources and may be accessed as follows:</p>
+<p>$ curl –H “$API_Key” <a class="reference external" href="http://www.demo.rpsmarf.ca/scs/resource/">http://www.demo.rpsmarf.ca/scs/resource/</a></p>
+<p>Where demo.rpsmarf.ca is the node running the Smarf Control Server Software.</p>
+<p>This returns the list of all the resources in the system. You will be able to see the resources corresponding to your private and public folder say /scs/resource/1/ and /scs/resource/2/ for example.
+Please note that each resource has a resource type, storage or compute for example. The storage resources have been defined to be of nature data. Please see the resource type corresponding to your private and public cloud folder (/scs/resource_type/1/ and /scs/resource_type/2/ for example)</p>
+<p>You may create a new resource type by doing the following:</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;tool_copy_source&#8221;, &#8220;nature&#8221;: &#8220;data&#8221;, &#8220;description&#8221;: &#8220;This is a source of copy data&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource_type/">http://demo.rpsmarf.ca/scs/resource_type/</a>
+HTTP/1.1 201 CREATED
+Server: nginx/1.6.2
+Date: Fri, 21 Nov 2014 18:05:04 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource_type/1/">http://demo.rpsmarf.ca/scs/resource_type/1/</a>
+Vary: Accept
+X-Frame-Options: SAMEORIGIN</p>
+<p>A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/. A container object refers to the location of the resource folder on the host machine.</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;data_repo&#8221;,&#8221;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;container&#8221;: &#8220;/scs/container/1/&#8221;, &#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/">http://demo.rpsmarf.ca/scs/resource/</a>
+HTTP/1.1 201 CREATED
+Server: nginx/1.6.2
+Date: Fri, 21 Nov 2014 18:58:16 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/">http://demo.rpsmarf.ca/scs/resource/1/</a>
+Vary: Accept
+X-Frame-Options: SAMEORIGIN</p>
+<p>The Metadata Search API consists of the following operations:</p>
+<p><strong>Defining the Metadata Schema</strong></p>
+<p>The first step for new users of metadata is to define a metadata schema (md_schema) which consists of a description and a set of metadata property type (md_property_type) objects.</p>
+<p>To define a schema, do:</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H “$API_Key” -d &#8216;{&#8220;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;name&#8221;: &#8220;Bridge Data&#8221;, &#8220;community&#8221;: &#8220;/scs/community/1/&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/md_schema/">http://demo.rpsmarf.ca/scs/md_schema/</a></p>
+<p>HTTP/1.0 201 CREATED
+Date: Wed, 03 Jun 2015 19:53:12 GMT
+Server: WSGIServer/0.2 CPython/3.4.1
+Vary: Accept
+Location: <a class="reference external" href="http://localhost:8000/scs/md_schema/4/">http://localhost:8000/scs/md_schema/4/</a>
+Content-Type: text/html; charset=utf-8
+X-Frame-Options: SAMEORIGIN</p>
+<p>To see a description of each field in the md_schema object do:</p>
+<p>$ curl –H “$API_Key” <a class="reference external" href="http://demo.rpsmarf.ca/scs/md_schema/schema/">http://demo.rpsmarf.ca/scs/md_schema/schema/</a></p>
+<p>To add a property type do:</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;Wind Speed&#8221;, &#8220;type&#8221;: &#8220;INT&#8221;, &#8220;schema&#8221;: &#8220;/scs/md_schema/4/&#8221;}&#8217; <a class="reference external" href="http://localhost:8000/scs/md_property_type/">http://localhost:8000/scs/md_property_type/</a></p>
+<p>HTTP/1.0 201 CREATED
+Date: Wed, 03 Jun 2015 19:57:26 GMT
+Server: WSGIServer/0.2 CPython/3.4.1
+Vary: Accept
+Location: <a class="reference external" href="http://localhost:8000/scs/md_property_type/1/">http://localhost:8000/scs/md_property_type/1/</a>
+Content-Type: text/html; charset=utf-8
+X-Frame-Options: SAMEORIGIN</p>
+<p>To see a description of each field in the md_property_type object do:</p>
+<p>$ curl –H “$API_Key” <a class="reference external" href="http://demo.rpsmarf.ca/scs/md_property_type/schema/">http://demo.rpsmarf.ca/scs/md_property_type/schema/</a></p>
+<p><strong>Setting up the Metadata Repository</strong></p>
+<p>Once the metadata schema has been setup one or more metadata repositories can be created.  Note that a researcher can have any number of metadata repositories on the same data.  This allows researchers to have a repository that they are working with while they are developing and debugging new metadata extraction tools that put data into a different metadata repository.</p>
+<p>To add a metadata repository:</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{&#8220;resources&#8221;: [&#8220;/scs/resource/1/&#8221;], &#8220;name&#8221;: &#8220;Bridge Data Repo 1&#8221;, &#8220;schema&#8221;: &#8220;/scs/md_schema/1/&#8221;}&#8217; <a class="reference external" href="http://localhost:8000/scs/md_repo/">http://localhost:8000/scs/md_repo/</a></p>
+<p>HTTP/1.0 201 CREATED
+Date: Wed, 03 Jun 2015 20:15:31 GMT
+Server: WSGIServer/0.2 CPython/3.4.1
+Vary: Accept
+X-Frame-Options: SAMEORIGIN
+Content-Type: text/html; charset=utf-8
+Location: <a class="reference external" href="http://localhost:8000/scs/md_repo/1/">http://localhost:8000/scs/md_repo/1/</a></p>
+<p>To see a description of each field in the md_repo object do:</p>
+<p>$ curl –H “$API_Key”<a class="reference external" href="http://demo.rpsmarf.ca/scs/md_repo/schema/">http://demo.rpsmarf.ca/scs/md_repo/schema/</a></p>
+<p><strong>Populating the Metadata Repository with Metadata</strong></p>
+<p>Metadata in the system is represented by two types of records:</p>
+<ul class="simple">
+<li>md_path records which represent files</li>
+<li>md_property records which represent individual properties</li>
+</ul>
+<p>To add a path record:</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{&#8220;relative_path&#8221;: &#8220;a/b&#8221;, &#8220;resource&#8221;: &#8220;/scs/resource/1/&#8221;, &#8220;repo&#8221;: &#8220;/scs/md_repo/1/&#8221;}&#8217; <a class="reference external" href="http://localhost:8000/scs/md_path/">http://localhost:8000/scs/md_path/</a></p>
+<blockquote>
+<div>HTTP/1.0 201 CREATED
+Date: Wed, 03 Jun 2015 21:28:16 GMT
+Server: WSGIServer/0.2 CPython/3.4.1
+Content-Type: text/html; charset=utf-8
+Location: <a class="reference external" href="http://localhost:8000/scs/md_path/3/">http://localhost:8000/scs/md_path/3/</a>
+Vary: Accept
+X-Frame-Options: SAMEORIGIN</div></blockquote>
+<p>To see a description of each field in the md_path object do:</p>
+<p>$ curl <a class="reference external" href="http://demo.rpsmarf.ca/scs/md_path/schema/">http://demo.rpsmarf.ca/scs/md_path/schema/</a></p>
+<p>To see a description of each field in the md_property object do:</p>
+<p>$ curl <a class="reference external" href="http://demo.rpsmarf.ca/scs/md_property/schema/">http://demo.rpsmarf.ca/scs/md_property/schema/</a></p>
+<p>To add a property record:</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{&#8220;value&#8221;: &#8220;33&#8221;, &#8220;property_type&#8221;: &#8220;/scs/md_property_type/1/&#8221;, &#8220;path&#8221;: &#8220;/scs/md_path/1/&#8221;, &#8220;repo&#8221;: &#8220;/scs/md_repo/1/&#8221;}&#8217; <a class="reference external" href="http://localhost:8000/scs/md_property/">http://localhost:8000/scs/md_property/</a></p>
+<blockquote>
+<div>HTTP/1.0 201 CREATED
+Date: Wed, 03 Jun 2015 21:30:37 GMT
+Server: WSGIServer/0.2 CPython/3.4.1
+Content-Type: text/html; charset=utf-8
+Location: <a class="reference external" href="http://localhost:8000/scs/md_property/5/">http://localhost:8000/scs/md_property/5/</a>
+Vary: Accept
+X-Frame-Options: SAMEORIGIN</div></blockquote>
+<p><strong>Performing Searches</strong></p>
+<p>The search operation returns a list of md_path records (i.e. records with a resource and a relative_path) the search command operates on the md_path object.</p>
+<p>The URL syntax is:</p>
+<p>&lt;host and port&gt;/scs/md_path/search?repo=&lt;repo id&gt;&amp;&lt;prop type name&gt;[__&lt;operator&gt;]=&lt;prop value&gt;&amp;&lt;prop type name&gt;[__&lt;operator&gt;]=&lt;prop value&gt;...</p>
+<p>The various parameters of the search operation are:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>repo: This parameter is the id of the repo, 1 for example.</li>
+<li>prop_type_name: This is the name of the property that the user is interested in.</li>
+<li>operator: The records returned depend upon the operator.</li>
+<li>prop_value: This is the value of the property.</li>
+</ol>
+</div></blockquote>
+</div>
+<div class="section" id="deploying-services">
+<h2>Deploying Services<a class="headerlink" href="#deploying-services" title="Permalink to this headline">¶</a></h2>
+<p>This section describes how you can log in to the DAIR cloud, set up a target VM, use the VM to run the RPSMARF software on it and then set up a new remote agent and a container.</p>
+<p><strong>Request Access to the DAIR Cloud Server</strong></p>
+<p>In order to log in to the DAIR cloud server, please go to <a class="reference external" href="http://fluidsurveys.com/s/DAIRsubmission/">http://fluidsurveys.com/s/DAIRsubmission/</a> and submit a request.</p>
+<p>Once you have received the credentials to log in to the DAIR cloud server go to <a class="reference external" href="https://nova-ab.dair-atir.canarie.ca/">https://nova-ab.dair-atir.canarie.ca/</a> and log in with your        credentials.</p>
+<p><strong>Create VMs in DAIR</strong></p>
+<p>This section describes how to create a VM in the DAIR cloud.</p>
+<ol class="arabic simple">
+<li>Create a key pair.</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Accessed through &#8220;Access &amp; Security&#8221; -&gt; &#8220;Keypairs&#8221;.  When a key pair is created you will download a .pem file. This file will be used to    access the VM through ssh. Keep this private!</li>
+<li>Click &#8216;Create Keypair&#8221;.</li>
+<li>Enter in the name of your key pair.</li>
+<li>Click &#8220;Create Keypair&#8221; in the modal window.</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="2">
+<li>Add rules to the default security group or add security group with rules. Rules specify which ports are opened (all closed by default).</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Accessed through &#8220;Access &amp; Security&#8221; -&gt; &#8220;Security Groups&#8221;.</li>
+<li>Adding SSH:</li>
+</ol>
+<blockquote>
+<div><ol class="lowerroman simple">
+<li>On &#8220;default&#8221; security group click &#8220;Edit Rules&#8221;.</li>
+<li>Click &#8220;Add Rule&#8221;. Modal window will pop up.</li>
+<li>For &#8220;Protocol&#8221; select &#8220;TCP&#8221;.</li>
+<li>For &#8220;Open&#8221; select &#8220;Port&#8221;.</li>
+<li>For &#8220;Port&#8221; enter &#8220;22&#8221;.</li>
+<li>For &#8220;Source&#8221; select &#8220;CIDR&#8221;.</li>
+<li>For &#8220;CIDR&#8221; enter IP Addresses allowed to access the instance. Default of 0.0.0.0/0 will allows all addresses.</li>
+<li>Click &#8220;Add&#8221;.</li>
+</ol>
+</div></blockquote>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>Launch an instance.</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Accessed through &#8220;Instances&#8221;.</li>
+<li>Click &#8220;Launch Instance&#8221;.</li>
+<li>In the modal window that pops up input the details. In the &#8220;Details&#8221; section input information such as name and the type of VM to run the  image on. Additionally you can select from a selection of images.</li>
+<li>For &#8220;Image&#8221; select Ubuntu 12.04.</li>
+<li>In the &#8220;Access and Security&#8221; section select your key pair (very important!).</li>
+<li>If needed add details for &#8220;Volume Options&#8221; and &#8220;Post-creation&#8221;. Volume options allows you to launch with attached storage. Post-creation   allows you to upload scripts that will run once the VM boots. Can be used for some configuration.</li>
+<li>NOTE: if you created an instance from one of the default images</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li>Assign an IP address to your Instance.</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Accessed through &#8220;Access and Security&#8221; -&gt; &#8220;Floating IPs&#8221;.</li>
+<li>Click &#8220;Allocate IP to Project&#8221;. Select pool as &#8220;nova&#8221; and click &#8220;Allocate IP&#8221;.</li>
+<li>Select &#8220;Instances&#8221; on left hand dashboard nav.</li>
+<li>For the desired instance Click &#8220;Associate Floating IP&#8221;, in the modal window select the Instance and the IP that you wish to assign to the  selected instance.</li>
+<li>Click &#8220;Associate&#8221;.</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="5">
+<li>Accessing Instance through SSH (from a Linux machine).</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>Open command prompt.</li>
+<li>Enter &#8220;ssh -i /path/to/keypair.pem <a class="reference external" href="mailto:ubuntu&#37;&#52;&#48;ip&#46;address">ubuntu<span>&#64;</span>ip<span>&#46;</span>address</a>&#8220;</li>
+<li>/path/to/keypair.pem should be the path to your downloaded .pem file (key pair)</li>
+<li>ip.address is the floating ip address you gave to your instance.</li>
+<li>ubuntu is the default user when creating an ubuntu instance.</li>
+</ol>
+</div></blockquote>
+<p><strong>How to use a VM in DAIR and run the Service Software on it</strong></p>
+<blockquote>
+<div>This section describes how to take a vanilla Ubuntu 14.04 VM in DAIR and run the SMARF software on it.</div></blockquote>
+<ol class="arabic simple">
+<li>Log in to the DAIR system</li>
+<li>Set the region to quebec or alberta via the pull-down selection in the upper right-hand region - note quebec should be faster for most       purposes.</li>
+<li>Create a VM in DAIR  by doing:<ol class="loweralpha">
+<li>Select Launch Instance by pressing the button on top right</li>
+<li>Set Instance Boot Source to Snapshot</li>
+<li>Set the Instance Snapshot to rpsmarf_ubuntu_14_04</li>
+<li>Set Instance Name to &lt;tag&gt;.rpsmarf.ca</li>
+<li>Set the Flavor to m1.small</li>
+<li>Click Launch</li>
+<li>If required allocate a floating IP address by<ol class="lowerroman">
+<li>waiting until the node is up</li>
+<li>clicking on Access and Security on the left hand side and selecting the Floating IPs tab. Click on Allocate IPs to Project.</li>
+</ol>
+</li>
+<li>Wait for the node to boot and then under the More button choose Associate Floating IP and associate an IP address.</li>
+<li>If required,go to GoDaddy and set up a name for this IP address.</li>
+</ol>
+</li>
+<li>SSH to the node by doing sshto &lt;tag&gt; e.g. sshto test to access test.rpsmarf.ca in your Ubuntu development VM</li>
+</ol>
+<p><strong>Setting Up a New Remote Agent</strong></p>
+<p>This section describes how to setup a new remote agent and get it connected to the SCS that will control it.</p>
+<p>1.  SSH to the newly created node
+2.</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>sudo emacs /etc/hosts and add:</li>
+<li>&lt;private IP address of the SCS node&gt; &lt;hostname of the SCS node&gt;</li>
+<li>For example:</li>
+<li>10.0.82.6 demo.rpsmarf.ca</li>
+</ol>
+</div></blockquote>
+<ol class="arabic simple" start="3">
+<li>Install SRA</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>sudo apt-get install smarf-sra</li>
+</ol>
+</div></blockquote>
+<ol class="arabic" start="4">
+<li><p class="first">sudo emacs /etc/smarf-sra/sra.conf and add:</p>
+<blockquote>
+<div><ol class="loweralpha simple">
+<li>export AGENT_GUID=&lt;name of remote agent&gt;      &lt;&#8211; note this name must match the name in the agent object created in the steps below</li>
+<li>export SCS_HOST_NAME=&lt;host name of the Control Server&gt; (e.g. demo.rpsmarf.ca)</li>
+</ol>
+</div></blockquote>
+</li>
+<li><p class="first">sudo service smarf-sra restart</p>
+</li>
+<li><p class="first">Exit the shell</p>
+</li>
+<li><p class="first">SSH to the SCS node</p>
+</li>
+<li><p class="first">Create the agent object using the REST API.</p>
+</li>
+</ol>
+<blockquote>
+<div><ol class="loweralpha">
+<li><p class="first">$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key”-d &#8216;{&#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;, &#8220;name&#8221;: &#8220;&lt;name&gt;&#8221;, &#8220;guid&#8221;:&#8221;&lt;name of remote agent   in sra.conf&gt;&#8221;,&#8221;agentUrl&#8221;:&#8221;ice://&lt;hostname of remote agent&gt;&#8221;} &#8216; “http://localhost/scs/agent/”</p>
+</li>
+<li><p class="first">Check the result and status after 15 seconds or so and we should see the status go to &#8220;up&#8221; as the remote agent registers with the SCS     (assuming it is running):</p>
+<blockquote>
+<div><p>$ curl -H “$API-Key” <a class="reference external" href="http://demo/scs/agent/2/">http://demo/scs/agent/2/</a>  &lt;&#8211; Use value returned in step a</p>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+<p><strong>Setting up a Container</strong></p>
+<p>Next we create a container which refers to the agent just created.</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{ &#8220;name&#8221;: &#8220;Alberta Container&#8221;, &#8220;name_key&#8221;: &#8220;testab1_tmp&#8221;, &#8220;containerUrl&#8221;:&#8221;local:// localhost/tmp&#8221;, &#8220;agent&#8221;: &#8220;/scs/agent/2/&#8221;} &#8216; “http://demo.rpsmarf.ca/scs/container/”</p>
+<p>After setting up the container, you can create your own storage resources within the container.</p>
+<p><strong>Resource Types and Resources</strong></p>
+<p>You may create a new resource type by doing the following. Please note that storage resources have the type data.</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;tool_copy_source&#8221;, &#8220;nature&#8221;: &#8220;data&#8221;, &#8220;description&#8221;: &#8220;This is a source   of copy data&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource_type/">http://demo.rpsmarf.ca/scs/resource_type/</a></p>
+<p>Please note that storage resources have the type data.</p>
+<p>HTTP/1.1 201 CREATED
+Server: nginx/1.6.2
+Date: Fri, 21 Nov 2014 18:05:04 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource_type/1/">http://demo.rpsmarf.ca/scs/resource_type/1/</a>
+Vary: Accept
+X-Frame-Options: SAMEORIGIN</p>
+<p>A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/.</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;data_repo&#8221;,&#8221;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;container&#8221;: &#8220;/scs/ container/1/&#8221;, &#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/">http://demo.rpsmarf.ca/scs/resource/</a></p>
+<p>HTTP/1.1 201 CREATED
+Server: nginx/1.6.2
+Date: Fri, 21 Nov 2014 18:58:16 GMT
+Content-Type: text/html; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/">http://demo.rpsmarf.ca/scs/resource/1/</a>
+Vary: Accept
+X-Frame-Options: SAMEORIGIN</p>
+<p><strong>How to Configure the VM in the Most Basic Configuration</strong></p>
+<ol class="arabic simple">
+<li>To initialize the control server, run the script scsInstallAndRestart.sh.</li>
+<li>To initialize the remote agent</li>
+<li>Wipe and initialize the database by running the script scsWipeAndInit.py</li>
+<li>You can set up the VM in the basic single node configuration by running the script  /opt/smarf-scs/scs/setup/singleNode/scs_core_setup.py.</li>
+</ol>
+</div>
 </div>
 
 
@@ -55,6 +373,18 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Metadata Search Service</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a></li>
+<li><a class="reference internal" href="#sample-applications">Sample Applications</a></li>
+<li><a class="reference internal" href="#get-a-trial-account">Get a Trial Account</a></li>
+<li><a class="reference internal" href="#reference-guide-sample-sequences">Reference Guide/Sample Sequences</a></li>
+<li><a class="reference internal" href="#deploying-services">Deploying Services</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="Cloud Storage Service.html"
                         title="previous chapter">Cloud Storage Service</a></p>
