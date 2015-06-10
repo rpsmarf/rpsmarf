@@ -198,8 +198,12 @@ The various parameters of the upload operation are:
 
 1. makeTempPath: This parameter specifies that the path in the request will be ignored and a path will be generated. This is returned in the path element in the data returned. This parameter is of the type bool and its default value is False.
                                                                                                                            
-2. Overwrite: If False then if the file path specified already exists, the upload operation fails. If True, then if the file exists, that file is atomically replaced with the uploaded file. The default is False.
-                                                                                                                                                        The return data for upload is as follows:                                                                                {                                                                                                                                                        "path": "<path of file uploaded - if makeTempPath was true, this is how to get the path generated>"                                                     }                                                                                                                                                                                                                                                 
+2. Overwrite: If False then if the file path specified already exists, the upload operation fails. If True, then if the file exists, that file is atomically replaced with the uploaded file. The default is False. 
+   
+The return data for upload is as follows:
+
+{                                     
+ "path": "<path of file uploaded - if makeTempPath was true, this is how to get the path generated>"                                                     }                                                                                                                                                                                                                                                 
 **Upload Examples**
                                                                                                                                                                 Assuming that there is a file called "x" in the working folder, you can do:
                                                                                                                             

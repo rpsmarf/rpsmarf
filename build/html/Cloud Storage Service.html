@@ -196,17 +196,14 @@ For example:
 <p>The upload operation uploads a file within the resource.</p>
 <p><strong>Upload Parameters</strong></p>
 <p>The various parameters of the upload operation are:</p>
-<ol class="arabic">
-<li><p class="first">makeTempPath: This parameter specifies that the path in the request will be ignored and a path will be generated. This is returned in the path element in the data returned. This parameter is of the type bool and its default value is False.</p>
-</li>
-<li><dl class="first docutils">
-<dt>Overwrite: If False then if the file path specified already exists, the upload operation fails. If True, then if the file exists, that file is atomically replaced with the uploaded file. The default is False.</dt>
-<dd><p class="first last">The return data for upload is as follows:                                                                                {                                                                                                                                                        &#8220;path&#8221;: &#8220;&lt;path of file uploaded - if makeTempPath was true, this is how to get the path generated&gt;&#8221;                                                     }</p>
-</dd>
-</dl>
-</li>
+<ol class="arabic simple">
+<li>makeTempPath: This parameter specifies that the path in the request will be ignored and a path will be generated. This is returned in the path element in the data returned. This parameter is of the type bool and its default value is False.</li>
+<li>Overwrite: If False then if the file path specified already exists, the upload operation fails. If True, then if the file exists, that file is atomically replaced with the uploaded file. The default is False.</li>
 </ol>
+<p>The return data for upload is as follows:</p>
 <dl class="docutils">
+<dt>{</dt>
+<dd>&#8220;path&#8221;: &#8220;&lt;path of file uploaded - if makeTempPath was true, this is how to get the path generated&gt;&#8221;                                                     }</dd>
 <dt><strong>Upload Examples</strong></dt>
 <dd>Assuming that there is a file called &#8220;x&#8221; in the working folder, you can do:</dd>
 </dl>
