@@ -25,7 +25,7 @@ In order to request a trial account with the RPSMARF system, send an email to su
 
 Sample Sequences
 ----------------
-The sample sequences in this section demonstrate some of the few useful things you can do with the Cloud Storage API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences.
+The sample sequences in this section demonstrate some of the few useful things you can do with the Cloud Storage API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences. Also you will need to use the -k option with the curl command. This option explicitly allows curl to perform "insecure" SSL connections and transfers.    All SSL connections are attempted to be made secure by using the CA certificate bundle installed by default.
 
 The key may be exported as:
 

@@ -64,7 +64,7 @@
 </div>
 <div class="section" id="reference-guide-sample-sequences">
 <h2>Reference Guide/Sample Sequences<a class="headerlink" href="#reference-guide-sample-sequences" title="Permalink to this headline">¶</a></h2>
-<p>The sample sequences in this section demonstrate some of the few useful things you can do with the Metadata Search API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences.</p>
+<p>The sample sequences in this section demonstrate some of the few useful things you can do with the Metadata Search API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences. Also you will need to use the -k option with the curl command. This option explicitly allows curl to perform &#8220;insecure&#8221; SSL connections and transfers. All SSL connections are attempted to be made secure by using the CA certificate bundle installed by default.</p>
 <p>The key may be exported as:</p>
 <p>export API_Key=&#8221;Authorization: ApiKey user_name:Key&#8221;
 where Key and user_name are provided in the email.</p>
