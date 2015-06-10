@@ -175,16 +175,78 @@ X-Frame-Options: SAMEORIGIN</div></blockquote>
 <li>repo: This parameter is the id of the repo, 1 for example.</li>
 <li>prop_type_name: This is the name of the property that the user is interested in.</li>
 <li>operator: The records returned depend upon the operator.</li>
-<li>prop_value: This is the value of the property.</li>
 </ol>
 </div></blockquote>
+<p>The is the operator used to compare the records in the repository to the values sought. If no operator is specified then the operator is &#8220;equals&#8221;. Operators include:</p>
+<blockquote>
+<div><blockquote>
+<div><ul class="simple">
+<li>gt - Greater Than</li>
+<li>gte - Greater Than or Equal To</li>
+<li>lt - Less Than</li>
+<li>lte - Less Than or Equal To</li>
+</ul>
+</div></blockquote>
+<ol class="arabic simple" start="4">
+<li>prop_value: This is the value of the property.</li>
+</ol>
+<p><strong>Search Examples</strong></p>
+<p>Assuming there are two files with different temperatures where temperature is a md_property_type object and the md_repo is /scs/md_repo/1/. The host on which the scs is running is <a class="reference external" href="https://www.rpsmarf.ca">https://www.rpsmarf.ca</a>.</p>
+<p>f1 - has temperature -5</p>
+<p>f2 - has temperature 31</p>
+<p>To find the files with temperature greater than -5 do:</p>
+<p>curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/md_path/search/?repo=1&amp;temperature__gt=-5">https://www.rpsmarf.ca/scs/md_path/search/?repo=1&amp;temperature__gt=-5</a>&#8221;
+{
+&#8220;objects&#8221;: [</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>{</dt>
+<dd>&#8220;gid&#8221;: 53,
+&#8220;id&#8221;: 2,
+&#8220;relative_path&#8221;: &#8220;dir/f2&#8221;,
+&#8220;repo&#8221;: &#8220;/scs/md_repo/1/&#8221;,
+&#8220;resource&#8221;: &#8220;/scs/resource/1/&#8221;,
+&#8220;resource_uri&#8221;: &#8220;/scs/md_path/2/&#8221;</dd>
+</dl>
+<dl class="docutils">
+<dt>}</dt>
+<dd>]</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
+</div></blockquote>
+<p>To find files with temperature less than -5 (expect no records):</p>
+<p>curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/md_path/search/?repo=1&amp;temperature__lt=-5">https://www.rpsmarf.ca/scs/md_path/search/?repo=1&amp;temperature__lt=-5</a>&#8221;
+{
+&#8220;objects&#8221;: []
+}</p>
+<p>To find records with temperature less than or equal to -5 (expect f1)</p>
+<p>curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/md_path/search/?repo=1&amp;temperature__lte=-5">https://www.rpsmarf.ca/scs/md_path/search/?repo=1&amp;temperature__lte=-5</a>&#8221;
+{
+&#8220;objects&#8221;: [</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>{</dt>
+<dd>&#8220;gid&#8221;: 52,
+&#8220;id&#8221;: 1,
+&#8220;relative_path&#8221;: &#8220;dir/f1&#8221;,
+&#8220;repo&#8221;: &#8220;/scs/md_repo/1/&#8221;,
+&#8220;resource&#8221;: &#8220;/scs/resource/1/&#8221;,
+&#8220;resource_uri&#8221;: &#8220;/scs/md_path/1/&#8221;</dd>
+</dl>
+<dl class="docutils">
+<dt>}</dt>
+<dd>]</dd>
+</dl>
+</div></blockquote>
+<p>}</p>
 </div>
 <div class="section" id="deploying-services">
 <h2>Deploying Services<a class="headerlink" href="#deploying-services" title="Permalink to this headline">¶</a></h2>
 <p>This section describes how you can log in to the DAIR cloud, set up a target VM, use the VM to run the RPSMARF software on it and then set up a new remote agent and a container.</p>
 <p><strong>Request Access to the DAIR Cloud Server</strong></p>
 <p>In order to log in to the DAIR cloud server, please go to <a class="reference external" href="http://fluidsurveys.com/s/DAIRsubmission/">http://fluidsurveys.com/s/DAIRsubmission/</a> and submit a request.</p>
-<p>Once you have received the credentials to log in to the DAIR cloud server go to <a class="reference external" href="https://nova-ab.dair-atir.canarie.ca/">https://nova-ab.dair-atir.canarie.ca/</a> and log in with your        credentials.</p>
+<p>Once you have received the credentials to log in to the DAIR cloud server go to <a class="reference external" href="https://nova-ab.dair-atir.canarie.ca/">https://nova-ab.dair-atir.canarie.ca/</a> and log in with your credentials.</p>
 <p><strong>Create VMs in DAIR</strong></p>
 <p>This section describes how to create a VM in the DAIR cloud.</p>
 <ol class="arabic simple">

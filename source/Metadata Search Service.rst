@@ -183,7 +183,63 @@ The various parameters of the search operation are:
  1. repo: This parameter is the id of the repo, 1 for example.
  2. prop_type_name: This is the name of the property that the user is interested in.
  3. operator: The records returned depend upon the operator.
- 4. prop_value: This is the value of the property. 
+
+The is the operator used to compare the records in the repository to the values sought. If no operator is specified then the operator is "equals". Operators include:
+
+     * gt - Greater Than
+     * gte - Greater Than or Equal To
+     * lt - Less Than
+     * lte - Less Than or Equal To
+
+ 4. prop_value: This is the value of the property.
+
+ **Search Examples**
+
+ Assuming there are two files with different temperatures where temperature is a md_property_type object and the md_repo is /scs/md_repo/1/. The host on which the scs is running is https://www.rpsmarf.ca.
+ 
+ f1 - has temperature -5
+ 
+ f2 - has temperature 31
+ 
+ To find the files with temperature greater than -5 do:
+ 
+ curl –H "$API_Key" "https://www.rpsmarf.ca/scs/md_path/search/?repo=1&temperature__gt=-5"
+ {
+ "objects": [
+  {
+    "gid": 53,
+    "id": 2,
+    "relative_path": "dir/f2",
+    "repo": "/scs/md_repo/1/",
+    "resource": "/scs/resource/1/",
+    "resource_uri": "/scs/md_path/2/"
+  }
+           ]   
+ } 
+           
+To find files with temperature less than -5 (expect no records):
+            
+curl –H "$API_Key" "https://www.rpsmarf.ca/scs/md_path/search/?repo=1&temperature__lt=-5"
+{
+"objects": []
+}
+              
+To find records with temperature less than or equal to -5 (expect f1)
+             
+curl –H "$API_Key" "https://www.rpsmarf.ca/scs/md_path/search/?repo=1&temperature__lte=-5"
+{
+"objects": [
+ {
+   "gid": 52,
+   "id": 1,
+   "relative_path": "dir/f1",
+   "repo": "/scs/md_repo/1/",
+   "resource": "/scs/resource/1/",
+   "resource_uri": "/scs/md_path/1/"
+ }
+             ]
+}
+                           
 
 Deploying Services
 ------------------
@@ -194,7 +250,7 @@ This section describes how you can log in to the DAIR cloud, set up a target VM,
      
 In order to log in to the DAIR cloud server, please go to http://fluidsurveys.com/s/DAIRsubmission/ and submit a request.
 
-Once you have received the credentials to log in to the DAIR cloud server go to https://nova-ab.dair-atir.canarie.ca/ and log in with your        credentials.
+Once you have received the credentials to log in to the DAIR cloud server go to https://nova-ab.dair-atir.canarie.ca/ and log in with your credentials.
        
 **Create VMs in DAIR**
         
