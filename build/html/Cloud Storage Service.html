@@ -75,23 +75,23 @@ Users can access the files via API calls (via an HTTP REST API). Users can also 
 <h2>Sample Sequences<a class="headerlink" href="#sample-sequences" title="Permalink to this headline">¶</a></h2>
 <p>The sample sequences in this section demonstrate some of the few useful things you can do with the Cloud Storage API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences.</p>
 <p>The key may be exported as:</p>
-<p>export API_Key=”Authorization: ApiKey user_name:Key”</p>
+<p>export API_Key=&#8221;Authorization: ApiKey user_name:Key&#8221;</p>
 <p>Please note that key and user_name will be provided in the email.</p>
 <p>The API_Key may be used in the subsequent REST calls as $API_Key.</p>
 <p>As a first step, you can try to locate your private and public folders by browsing the resources that have you as the owner.</p>
-<p>$ curl –H “$API_Key” “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/">http://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/</a>”</p>
+<p>$ curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/">https://www.rpsmarf.ca/scs/resource/?user=/scs/user/12/</a>&#8220;</p>
 <p>Once you have located your private folder and public folder you may try to make a new folder within the resource. If your public folder is /scs/resource/15/ for example, you can make a new folder named test in your public folder as follows:</p>
-<p>curl –H “$API_Key” “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/test/mkdir/">http://www.rpsmarf.ca/scs/resource/15/test/mkdir/</a>”</p>
+<p>curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/resource/15/test/mkdir/">https://www.rpsmarf.ca/scs/resource/15/test/mkdir/</a>&#8220;</p>
 <p>You can then do a list operation on the resource to see the newly created folder within the resource.</p>
-<p>$ curl –H “$API_Key” “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/list/">http://www.rpsmarf.ca/scs/resource/15/list/</a>”</p>
+<p>$ curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/resource/15/list/">https://www.rpsmarf.ca/scs/resource/15/list/</a>&#8220;</p>
 <p>You may try to upload a file in the current directory to the resource as follows:</p>
 <p>Assuming that there is a file called &#8220;x&#8221; in the working folder, you can do:</p>
-<p>$ curl –H “$API_Key” -i –F uploadfile=&#64;x “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/upload/">http://www.rpsmarf.ca/scs/resource/15/newfile/upload/</a>”</p>
+<p>$ curl –H &#8220;$API_Key&#8221; -i –F uploadfile=&#64;x &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/resource/15/newfile/upload/">https://www.rpsmarf.ca/scs/resource/15/newfile/upload/</a>&#8220;</p>
 <p>When you do a list operation on the resource, you will see the uploaded file and the folder test.</p>
 <p>Next, you can try to download the uploaded file as follows:</p>
-<p>$ curl –H “$API_Key” <a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/download/">http://www.rpsmarf.ca/scs/resource/15/newfile/download/</a></p>
+<p>$ curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/resource/15/newfile/download/">https://www.rpsmarf.ca/scs/resource/15/newfile/download/</a>&#8220;</p>
 <p>You may also delete the file as follows:</p>
-<p>$ curl -i -H &#8220;Accept: application/json&#8221; –H “$API_Key” -X DELETE  “<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/file/">http://www.rpsmarf.ca/scs/resource/15/newfile/file/</a>”</p>
+<p>$ curl -i -H &#8220;Accept: application/json&#8221; –H &#8220;$API_Key&#8221; -X DELETE  &#8220;<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/15/newfile/file/">http://www.rpsmarf.ca/scs/resource/15/newfile/file/</a>&#8220;</p>
 <p>On performing a list operation on the resource, you will no longer see the file newfile.</p>
 <p>The next section is a detailed reference guide for accessing the storage resource.</p>
 </div>
@@ -140,7 +140,7 @@ For example:
 <li>lastPathReturned: This parameter specifies the next path to return in a &#8216;paged&#8217; listing of files. This is done by setting this parameter to the path of the last file/folder returned and the list operation will return entries which occur after the path specified by this parameter. This parameter is of type string and its default value is &#8220;&#8221;.</li>
 </ol>
 <p><strong>List Examples</strong></p>
-<p>$ curl –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/">http://demo.rpsmarf.ca/scs/resource/3/list/</a>”
+<p>$ curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/">http://demo.rpsmarf.ca/scs/resource/3/list/</a>&#8221;
 [
 {
 &#8220;basename&#8221;: &#8220;101_data/&#8221;,
@@ -165,7 +165,7 @@ For example:
 },
 ...</p>
 <p>Listing files, one by one:</p>
-<p>$ curl –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1">http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1</a>”
+<p>$ curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="http://www.rpsmarf.ca/scs/resource/3/list/?maxEntries=1">http://www.rpsmarf.ca/scs/resource/3/list/?maxEntries=1</a>&#8221;
 [
 {
 &#8220;basename&#8221;: &#8220;101_data/&#8221;,
@@ -175,7 +175,7 @@ For example:
 &#8220;size&#8221;: 0
 }
 ]</p>
-<p>$ curl –H “$API_Key” &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1&amp;lastPathReturned=101_data/">http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1&amp;lastPathReturned=101_data/</a>&#8221;
+<p>$ curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1&amp;lastPathReturned=101_data/">http://demo.rpsmarf.ca/scs/resource/3/list/?maxEntries=1&amp;lastPathReturned=101_data/</a>&#8221;
 [
 {
 &#8220;basename&#8221;: &#8220;2014-09-01.data&#8221;,
@@ -188,7 +188,7 @@ For example:
 <p><strong>Download</strong></p>
 <p>The download operation downloads a file within the resource.</p>
 <p><strong>Download Example</strong></p>
-<p>$ curl –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/download/">http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/download/</a>”
+<p>$ curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/download/">http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/download/</a>&#8221;
 {
 &#8220;segmentSize&#8221; : 0.04    &lt;&#8211; Actual file contents
 }</p>
@@ -210,7 +210,7 @@ For example:
 <dt><strong>Upload Examples</strong></dt>
 <dd>Assuming that there is a file called &#8220;x&#8221; in the working folder, you can do:</dd>
 </dl>
-<p>$ curl –H “$API_Key”  -i -F uploadfile=&#64;x <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/test/upload/">http://demo.rpsmarf.ca/scs/resource/1/test/upload/</a></p>
+<p>$ curl –H &#8220;$API_Key&#8221;  -i -F uploadfile=&#64;x &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/test/upload/">http://demo.rpsmarf.ca/scs/resource/1/test/upload/</a>&#8220;</p>
 <p>HTTP/1.1 100 Continue
 HTTP/1.1 200 OK
 Server: nginx/1.6.2
@@ -223,7 +223,7 @@ X-Frame-Options: SAMEORIGIN
 <p><strong>Metadata</strong></p>
 <p>The metadata operation enables you to see metadata of a file or a folder within the resource.</p>
 <p><strong>Metadata Examples</strong></p>
-<p>$ curl –H “$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/101_data/metadata/">http://demo.rpsmarf.ca/scs/resource/3/101_data/metadata/</a>”
+<p>$ curl –H &#8220;$API_Key&#8221;  &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/101_data/metadata/">http://demo.rpsmarf.ca/scs/resource/3/101_data/metadata/</a>&#8221;
 [
 {
 &#8220;isDir&#8221;: true,
@@ -232,7 +232,7 @@ X-Frame-Options: SAMEORIGIN
 &#8220;size&#8221;: 0
 }
 ]</p>
-<p>$ curl –H “$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/metadata/">http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/metadata/</a>”
+<p>$ curl –H &#8220;$API_Key&#8221;  &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/metadata/">http://demo.rpsmarf.ca/scs/resource/3/2014-09-01.data/metadata/</a>&#8221;
 [
 {
 &#8220;isDir&#8221;: false,
@@ -249,8 +249,8 @@ X-Frame-Options: SAMEORIGIN
 <li>makeParentFolders: This parameter is of type bool and its default value is False. If true, then any missing parent folders are created. This is equivalent to the -p option on mkdir in Unix.</li>
 </ol>
 <p><strong>Mkdir Examples</strong></p>
-<p>$ curl –H “$API_Key”  <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/folder1/mkdir/">http://demo.rpsmarf.ca/scs/resource/3/folder1/mkdir/</a></p>
-<p>$ curl –H “$API_Key”  <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/folder2/folder3/folder4/mkdir/?makeParentFolders=True">http://demo.rpsmarf.ca/scs/resource/3/folder2/folder3/folder4/mkdir/?makeParentFolders=True</a></p>
+<p>$ curl –H &#8220;$API_Key&#8221;  &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/folder1/mkdir/">http://demo.rpsmarf.ca/scs/resource/3/folder1/mkdir/</a>&#8220;</p>
+<p>$ curl –H &#8220;$API_Key&#8221;  &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/3/folder2/folder3/folder4/mkdir/?makeParentFolders=True">http://demo.rpsmarf.ca/scs/resource/3/folder2/folder3/folder4/mkdir/?makeParentFolders=True</a>&#8220;</p>
 <p><strong>Zip</strong></p>
 <p>The zip operation enables you zip a file or a folder.</p>
 <p><strong>Zip Parameters</strong></p>
@@ -269,9 +269,9 @@ X-Frame-Options: SAMEORIGIN
 <p>Any operation which can take a long time to complete needs to have a mechanism to report the progress of the operation. Zip is an example of one of these operations. Other such operations are recursive delete of a folder and unzip.</p>
 <p>For operations which can take a long time a task is created internally within the system and then return the path of the task is returned to allow the caller to poll the state of the task to observe progress and whether the operation eventually completes successfully.</p>
 <p>The progress of the task can be seen by issuing the curl command as follows:</p>
-<p>curl –H “$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/task/77/">http://demo.rpsmarf.ca/scs/task/77/</a>”</p>
+<p>curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/task/77/">http://demo.rpsmarf.ca/scs/task/77/</a>&#8220;</p>
 <p><strong>Zip Example</strong></p>
-<p>$ curl –H “Authorization: ApiKey user_name:$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/f1/zip/?makeTempPath=True">http://demo.rpsmarf.ca/scs/resource/1/f1/zip/?makeTempPath=True</a>”
+<p>$ curl –H &#8220;Authorization: ApiKey user_name:$API_Key&#8221;  &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/f1/zip/?makeTempPath=True">http://demo.rpsmarf.ca/scs/resource/1/f1/zip/?makeTempPath=True</a>&#8221;
 {&#8220;zipFilePath&#8221;: &#8221;.rpsmarf/tmp/8329c3ca-1f03-4351-8984-2fddc8a18514.zip&#8221;, &#8220;taskPath&#8221;: &#8220;/scs/task/1/&#8221;}</p>
 <p><strong>Unzip</strong></p>
 <p>The unzip operation enables you to unzip a zipped file.</p>
@@ -285,9 +285,9 @@ X-Frame-Options: SAMEORIGIN
 &#8220;taskPath&#8221;: &#8220;&lt;path to task running the unzip operation, e.g.: /scs/task/77&gt;&#8221;
 }</p>
 <p><strong>Unzip Example</strong></p>
-<p>$ curl –H “$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/f1/unzip/?zipFilePath=.rpsmarf/tmp/e8970d5d-3fef-4bcb-9637-9b4c05949f27.zip">http://demo.rpsmarf.ca/scs/resource/1/f1/unzip/?zipFilePath=.rpsmarf/tmp/e8970d5d-3fef-4bcb-9637-9b4c05949f27.zip</a>”</p>
+<p>$ curl –H &#8220;$API_Key&#8221;  &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/f1/unzip/?zipFilePath=.rpsmarf/tmp/e8970d5d-3fef-4bcb-9637-9b4c05949f27.zip">http://demo.rpsmarf.ca/scs/resource/1/f1/unzip/?zipFilePath=.rpsmarf/tmp/e8970d5d-3fef-4bcb-9637-9b4c05949f27.zip</a>&#8220;</p>
 <p>{&#8220;taskPath&#8221;: &#8220;/scs/task/2/&#8221;}</p>
-<p>$ curl –H “Authorization: ApiKey user_name:$API_Key”  <a class="reference external" href="http://demo.rpsmarf.ca/scs/task/2/">http://demo.rpsmarf.ca/scs/task/2/</a>
+<p>$ curl –H &#8220;$API_Key&#8221;  &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/task/2/">http://demo.rpsmarf.ca/scs/task/2/</a>&#8221;
 {
 &#8220;completion&#8221;: &#8220;completedWithoutError&#8221;,
 ...
@@ -307,7 +307,7 @@ X-Frame-Options: SAMEORIGIN
 {</p>
 <p>}</p>
 <p><strong>Rename Example</strong></p>
-<p>$curl –H “$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/f1/rename/?newName=f2">http://demo.rpsmarf.ca/scs/resource/1/f1/rename/?newName=f2</a>”</p>
+<p>$curl –H &#8220;$API_Key&#8221;  &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/f1/rename/?newName=f2">http://demo.rpsmarf.ca/scs/resource/1/f1/rename/?newName=f2</a>&#8220;</p>
 <p>{}</p>
 <p><strong>Move</strong></p>
 <p>This API moves a file in a folder to another folder, possibly with a new name.</p>
@@ -320,18 +320,18 @@ X-Frame-Options: SAMEORIGIN
 {</p>
 <p>}</p>
 <p><strong>Move Example</strong></p>
-<p>$ curl –H “$API_Key”  “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/move/?newPath=a/c/f2">http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/move/?newPath=a/c/f2</a>”</p>
+<p>$ curl –H &#8220;$API_Key&#8221;  &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/move/?newPath=a/c/f2">http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/move/?newPath=a/c/f2</a>&#8220;</p>
 <p>{}</p>
 <p><strong>Delete Single File or Folder Operation</strong></p>
 <p>This call deletes a single file or folder (which must be empty).</p>
 <p>The path after the resource path contains the path to the file or folder to delete followed by /file/ if the path is for a file or /folder/ if the path is a folder.</p>
 <p><strong>Delete Example</strong></p>
 <p>To delete the folder xx within /scs/resource/1/</p>
-<p>$ curl -i -H &#8220;Accept: application/json&#8221; –H “$API_Key” –X DELETE “<a class="reference external" href="http://localhost/scs/resource/1/xx/folder/">http://localhost/scs/resource/1/xx/folder/</a>”</p>
+<p>$ curl -i -H &#8220;Accept: application/json&#8221; –H &#8220;$API_Key&#8221; –X DELETE &#8220;<a class="reference external" href="http://localhost/scs/resource/1/xx/folder/">http://localhost/scs/resource/1/xx/folder/</a>&#8220;</p>
 <p>HTTP/1.1 204 NO CONTENT
 ...</p>
 <p><strong>Example of error (deleting a file as a folder)</strong></p>
-<p>curl-i -H &#8220;Accept: application/json&#8221; –H “$API_Key” -X DELETE “<a class="reference external" href="http://localhost/scs/resource/1/z/folder/">http://localhost/scs/resource/1/z/folder/</a>”</p>
+<p>curl-i -H &#8220;Accept: application/json&#8221; –H &#8220;$API_Key&#8221; -X DELETE &#8220;<a class="reference external" href="http://localhost/scs/resource/1/z/folder/">http://localhost/scs/resource/1/z/folder/</a>&#8220;</p>
 <p>HTTP/1.1 422 OK
 ...
 {&#8220;osPath&#8221;: &#8220;/tmp/src/z/&#8221;, &#8220;description&#8221;: &#8220;Not a directory&#8221;, &#8220;code&#8221;: &#8220;ENOTDIR&#8221;, &#8220;apiPathName&#8221;: &#8220;z/&#8221;, &#8220;operation&#8221;: &#8220;delete&#8221;}</p>
@@ -339,9 +339,9 @@ X-Frame-Options: SAMEORIGIN
 <p>This function starts a task which will recursively delete the folder specified.</p>
 <p>There are no parameters beside the path.</p>
 <p><strong>Delete Recursive Example</strong></p>
-<p>$ curl -v –H “$API_Key” “<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/deleterecursive/">http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/deleterecursive/</a>”</p>
+<p>$ curl -v –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/deleterecursive/">http://demo.rpsmarf.ca/scs/resource/1/a/b/f1/deleterecursive/</a>&#8220;</p>
 <p>{&#8220;taskPath&#8221;: &#8220;/scs/task/2/&#8221;}</p>
-<p>$ curl –H “$API_Key” <a class="reference external" href="http://demo.rpsmarf.ca/scs/task/2/">http://demo.rpsmarf.ca/scs/task/2/</a></p>
+<p>$ curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/task/2/">http://demo.rpsmarf.ca/scs/task/2/</a>&#8220;</p>
 <p>{
 &#8220;completion&#8221;: &#8220;completedWithoutError&#8221;,
 ...
@@ -360,13 +360,13 @@ X-Frame-Options: SAMEORIGIN
 <li>perm: This parameter is also of the type string and can be any combination (in any order) of &#8220;r&#8221;, &#8220;w&#8221; and &#8220;x&#8221; where “r” indicates read permission, “w” indicates write permission and “x” indicates execute (aka run) permission.</li>
 </ol>
 <p><strong>Set User Permission Example</strong></p>
-<p>$ curl -H “$API-Key” &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/setperm/?user=/scs/user/1/&amp;perm=rw&amp;action=assign">http://demo.rpsmarf.ca/scs/resource/1/setperm/?user=/scs/user/1/&amp;perm=rw&amp;action=assign</a>&#8220;</p>
+<p>$ curl -H &#8220;$API-Key&#8221; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/setperm/?user=/scs/user/1/&amp;perm=rw&amp;action=assign">http://demo.rpsmarf.ca/scs/resource/1/setperm/?user=/scs/user/1/&amp;perm=rw&amp;action=assign</a>&#8220;</p>
 <p><strong>Get User Permissions to Access a Resource</strong></p>
 <p>The getperm command gets the permissions users have to access a resource.</p>
 <p><strong>Get User Permission Parameters</strong></p>
 <p>There are no parameters for the getperm request.
 <strong>Get User Permission Example</strong></p>
-<p>curl -H “$API-Key” &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/getperm/">http://demo.rpsmarf.ca/scs/resource/1/getperm/</a>&#8220;</p>
+<p>curl -H &#8220;$API-Key&#8221; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/getperm/">http://demo.rpsmarf.ca/scs/resource/1/getperm/</a>&#8220;</p>
 <p>{
 &#8220;/scs/user/1/&#8221;: [
 &#8220;add_smmodelresource&#8221;,
@@ -509,20 +509,20 @@ ii. clicking on Access and Security on the left hand side and selecting the Floa
 <li><p class="first">Create the agent object using the REST API.</p>
 <blockquote>
 <div><ol class="loweralpha simple">
-<li>curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key”-d &#8216;{&#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;, &#8220;name&#8221;: &#8220;&lt;name&gt;&#8221;, &#8220;guid&#8221;:&#8221;&lt;name of remote agent in sra.conf&gt;&#8221;,&#8221;agentUrl&#8221;:&#8221;ice://&lt;hostname of remote agent&gt;&#8221;} &#8216; “http://localhost/scs/agent/”</li>
+<li>curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key”-d &#8216;{&#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;, &#8220;name&#8221;: &#8220;&lt;name&gt;&#8221;, &#8220;guid&#8221;:&#8221;&lt;name of remote agent in sra.conf&gt;&#8221;,&#8221;agentUrl&#8221;:&#8221;ice://&lt;hostname of remote agent&gt;&#8221;} &#8216; &#8220;http://localhost/scs/agent/&#8221;</li>
 <li>Check the result and status after 15 seconds or so and we should see the status go to &#8220;up&#8221; as the remote agent registers with the SCS (assuming it is running):</li>
 </ol>
-<p>$ curl -H “$API-Key” <a class="reference external" href="http://demo/scs/agent/2/">http://demo/scs/agent/2/</a>  &lt;&#8211; Use value returned in step a</p>
+<p>$ curl -H &#8220;$API-Key&#8221; &#8220;<a class="reference external" href="http://demo/scs/agent/2/">http://demo/scs/agent/2/</a>&#8221;  &lt;&#8211; Use value returned in step a</p>
 </div></blockquote>
 </li>
 </ol>
 <p><strong>Setting up a Container</strong></p>
 <p>Next we create a container which refers to the agent just created.</p>
-<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{ &#8220;name&#8221;: &#8220;Alberta Container&#8221;, &#8220;name_key&#8221;: &#8220;testab1_tmp&#8221;, &#8220;containerUrl&#8221;:&#8221;local://localhost/tmp&#8221;, &#8220;agent&#8221;: &#8220;/scs/agent/2/&#8221;} &#8216; “http://demo.rpsmarf.ca/scs/container/”</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H &#8220;$API_Key&#8221; -d &#8216;{ &#8220;name&#8221;: &#8220;Alberta Container&#8221;, &#8220;name_key&#8221;: &#8220;testab1_tmp&#8221;, &#8220;containerUrl&#8221;:&#8221;local://localhost/tmp&#8221;, &#8220;agent&#8221;: &#8220;/scs/agent/2/&#8221;} &#8216; &#8220;http://demo.rpsmarf.ca/scs/container/&#8221;</p>
 <p>After setting up the container, you can create your own storage resources within the container.</p>
 <p><strong>Resource Types and Resources</strong></p>
 <p>You may create a new resource type by doing the following. Please note that storage resources have the type data.</p>
-<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;tool_copy_source&#8221;, &#8220;nature&#8221;: &#8220;data&#8221;, &#8220;description&#8221;: &#8220;This is a source of copy data&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource_type/">http://demo.rpsmarf.ca/scs/resource_type/</a></p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H &#8220;$API_Key&#8221; -d &#8216;{&#8220;name&#8221;: &#8220;tool_copy_source&#8221;, &#8220;nature&#8221;: &#8220;data&#8221;, &#8220;description&#8221;: &#8220;This is a source of copy data&#8221;}&#8217; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource_type/">http://demo.rpsmarf.ca/scs/resource_type/</a>&#8220;</p>
 <p>Please note that storage resources have the type data.</p>
 <p>HTTP/1.1 201 CREATED
 Server: nginx/1.6.2
@@ -534,7 +534,7 @@ Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resourc
 Vary: Accept
 X-Frame-Options: SAMEORIGIN</p>
 <p>A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/.</p>
-<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H “$API_Key” -d &#8216;{&#8220;name&#8221;: &#8220;data_repo&#8221;,&#8221;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;container&#8221;: &#8220;/scs/container/1/&#8221;, &#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;}&#8217; <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/">http://demo.rpsmarf.ca/scs/resource/</a></p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H &#8220;$API_Key&#8221; -d &#8216;{&#8220;name&#8221;: &#8220;data_repo&#8221;,&#8221;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;container&#8221;: &#8220;/scs/container/1/&#8221;, &#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;}&#8217; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/">http://demo.rpsmarf.ca/scs/resource/</a>&#8220;</p>
 <p>HTTP/1.1 201 CREATED
 Server: nginx/1.6.2
 Date: Fri, 21 Nov 2014 18:58:16 GMT

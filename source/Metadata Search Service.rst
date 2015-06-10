@@ -25,47 +25,51 @@ If you are not already an RPSMARF system user, you can request a trial account w
 Reference Guide/Sample Sequences
 --------------------------------
 
-The sample sequences in this section demonstrate some of the few useful things you can do with the Cloud Storage API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences.
+The sample sequences in this section demonstrate some of the few useful things you can do with the Metadata Search API. In order to prevent providing the API key in the header with every curl command, you may export it before trying out the sequences.
 
 The key may be exported as:
 
-export API_Key=”Authorization: ApiKey user_name:Key” 
+export API_Key="Authorization: ApiKey user_name:Key" 
 where Key and user_name are provided in the email.
 
 The API_Key may be used in the subsequent REST calls as $API_Key. 
 
 As mentioned in the previous section, you will be provided two resources, a private cloud folder and a public cloud folder when requesting a trial account. These folders are storage resources and may be accessed as follows:
 
-$ curl –H “$API_Key” http://www.demo.rpsmarf.ca/scs/resource/
+$ curl –H "$API_Key" "https://www.rpsmarf.ca/scs/resource/"
 
-Where demo.rpsmarf.ca is the node running the Smarf Control Server Software.
+Where www.rpsmarf.ca is the node running the Smarf Control Server Software.
 
 This returns the list of all the resources in the system. You will be able to see the resources corresponding to your private and public folder say /scs/resource/1/ and /scs/resource/2/ for example.
+
 Please note that each resource has a resource type, storage or compute for example. The storage resources have been defined to be of nature data. Please see the resource type corresponding to your private and public cloud folder (/scs/resource_type/1/ and /scs/resource_type/2/ for example)
 
-You may create a new resource type by doing the following:
+You may create a new resource type by doing the following. Please note that before creating a resource you need to create a resource type for the resource. 
 
-$ curl -i -H "Content-Type: application/json" –H “$API_Key” -d '{"name": "tool_copy_source", "nature": "data", "description": "This is a source of copy data"}' http://demo.rpsmarf.ca/scs/resource_type/
+$ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"name": "tool_copy_source", "nature": "data", "description": "This is a source of copy data"}' 
+"https://www.rpsmarf.ca/scs/resource_type/"
+
 HTTP/1.1 201 CREATED
 Server: nginx/1.6.2
 Date: Fri, 21 Nov 2014 18:05:04 GMT
 Content-Type: text/html; charset=utf-8
 Transfer-Encoding: chunked
 Connection: keep-alive
-Location: http://demo.rpsmarf.ca/scs/resource_type/1/
+Location: https://www.rpsmarf.ca/scs/resource_type/1/
 Vary: Accept
 X-Frame-Options: SAMEORIGIN
 
-A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/. A container object refers to the location of the resource folder on the host machine.
+A new resource may be now be created as following. The resource type is /scs/resource_type/1/. A container object refers to the location of the resource folder on the host machine.
 
-$ curl -i -H "Content-Type: application/json" -H “$API_Key” -d '{"name": "data_repo","resource_type": "/scs/resource_type/1/", "container": "/scs/container/1/", "owner": "/scs/user/1/"}' http://demo.rpsmarf.ca/scs/resource/
+$ curl -i -H "Content-Type: application/json" -H "$API_Key" -d '{"name": "data_repo","resource_type": "/scs/resource_type/1/", "container": "/scs/container/1/", "owner": "/scs/user/1/"}' "https://www.rpsmarf.ca/scs/resource/"
+
 HTTP/1.1 201 CREATED
 Server: nginx/1.6.2
 Date: Fri, 21 Nov 2014 18:58:16 GMT
 Content-Type: text/html; charset=utf-8
 Transfer-Encoding: chunked
 Connection: keep-alive
-Location: http://demo.rpsmarf.ca/scs/resource/1/
+Location: https://www.rpsmarf.ca/scs/resource/1/
 Vary: Accept
 X-Frame-Options: SAMEORIGIN
 
@@ -77,35 +81,35 @@ The first step for new users of metadata is to define a metadata schema (md_sche
 
 To define a schema, do:
 
-$ curl -i -H "Content-Type: application/json" -H “$API_Key” -d '{"resource_type": "/scs/resource_type/1/", "name": "Bridge Data", "community": "/scs/community/1/"}' http://demo.rpsmarf.ca/scs/md_schema/
+$ curl -i -H "Content-Type: application/json" -H "$API_Key" -d '{"resource_type": "/scs/resource_type/1/", "name": "Bridge Data", "community": "/scs/community/1/"}' "https://www.rpsmarf.ca/scs/md_schema/"
 
 HTTP/1.0 201 CREATED
 Date: Wed, 03 Jun 2015 19:53:12 GMT
 Server: WSGIServer/0.2 CPython/3.4.1
 Vary: Accept
-Location: http://localhost:8000/scs/md_schema/4/
+Location: https://www.rpsmarf.ca/scs/md_schema/4/
 Content-Type: text/html; charset=utf-8
 X-Frame-Options: SAMEORIGIN
 
 To see a description of each field in the md_schema object do:
 
-$ curl –H “$API_Key” http://demo.rpsmarf.ca/scs/md_schema/schema/
+$ curl –H "$API_Key" "https://www.rpsmarf.ca/scs/md_schema/schema/"
 
 To add a property type do:
 
-$ curl -i -H "Content-Type: application/json" –H “$API_Key” -d '{"name": "Wind Speed", "type": "INT", "schema": "/scs/md_schema/4/"}' http://localhost:8000/scs/md_property_type/
+$ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"name": "Wind Speed", "type": "INT", "schema": "/scs/md_schema/4/"}' "https://www.rpsmarf.ca/scs/md_property_type/"
 
 HTTP/1.0 201 CREATED
 Date: Wed, 03 Jun 2015 19:57:26 GMT
 Server: WSGIServer/0.2 CPython/3.4.1
 Vary: Accept
-Location: http://localhost:8000/scs/md_property_type/1/
+Location: https://www.rpsmarf.ca/scs/md_property_type/1/
 Content-Type: text/html; charset=utf-8
 X-Frame-Options: SAMEORIGIN
 
 To see a description of each field in the md_property_type object do:
 
-$ curl –H “$API_Key” http://demo.rpsmarf.ca/scs/md_property_type/schema/
+$ curl –H "$API_Key" "https://www.rpsmarf.ca/scs/md_property_type/schema/"
 
 **Setting up the Metadata Repository**
 
@@ -113,7 +117,7 @@ Once the metadata schema has been setup one or more metadata repositories can be
 
 To add a metadata repository:
 
-$ curl -i -H "Content-Type: application/json" –H “$API_Key” -d '{"resources": ["/scs/resource/1/"], "name": "Bridge Data Repo 1", "schema": "/scs/md_schema/1/"}' http://localhost:8000/scs/md_repo/
+$ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"resources": ["/scs/resource/1/"], "name": "Bridge Data Repo 1", "schema": "/scs/md_schema/1/"}' "https://www.rpsmarf.ca/scs/md_repo/"
 
 HTTP/1.0 201 CREATED
 Date: Wed, 03 Jun 2015 20:15:31 GMT
@@ -121,11 +125,11 @@ Server: WSGIServer/0.2 CPython/3.4.1
 Vary: Accept
 X-Frame-Options: SAMEORIGIN
 Content-Type: text/html; charset=utf-8
-Location: http://localhost:8000/scs/md_repo/1/
+Location: https://www.rpsmarf.ca/scs/md_repo/1/
 
 To see a description of each field in the md_repo object do:
 
-$ curl –H “$API_Key”http://demo.rpsmarf.ca/scs/md_repo/schema/
+$ curl –H "$API_Key" "https://www.rpsmarf.ca/scs/md_repo/schema/"
 
 **Populating the Metadata Repository with Metadata**
 
@@ -136,33 +140,33 @@ Metadata in the system is represented by two types of records:
 
 To add a path record:
 
-$ curl -i -H "Content-Type: application/json" –H “$API_Key” -d '{"relative_path": "a/b", "resource": "/scs/resource/1/", "repo": "/scs/md_repo/1/"}' http://localhost:8000/scs/md_path/
+$ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"relative_path": "a/b", "resource": "/scs/resource/1/", "repo": "/scs/md_repo/1/"}' "https://www.rpsmarf.ca/scs/md_path/
 
  HTTP/1.0 201 CREATED
  Date: Wed, 03 Jun 2015 21:28:16 GMT
  Server: WSGIServer/0.2 CPython/3.4.1
  Content-Type: text/html; charset=utf-8
- Location: http://localhost:8000/scs/md_path/3/
+ Location: https://www.rpsmarf.ca/scs/md_path/3/
  Vary: Accept
  X-Frame-Options: SAMEORIGIN
  
 To see a description of each field in the md_path object do:
 
-$ curl http://demo.rpsmarf.ca/scs/md_path/schema/ 
+$ curl –H "$API_Key" "https://www.rpsmarf.ca/scs/md_path/schema/" 
 
 To see a description of each field in the md_property object do:
 
-$ curl http://demo.rpsmarf.ca/scs/md_property/schema/
+$ curl –H "$API_Key" "https://demo.rpsmarf.ca/scs/md_property/schema/"
  
 To add a property record:
  
-$ curl -i -H "Content-Type: application/json" –H “$API_Key” -d '{"value": "33", "property_type": "/scs/md_property_type/1/", "path": "/scs/md_path/1/", "repo": "/scs/md_repo/1/"}' http://localhost:8000/scs/md_property/
+$ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"value": "33", "property_type": "/scs/md_property_type/1/", "path": "/scs/md_path/1/", "repo": "/scs/md_repo/1/"}' "https://www.rpsmarf.ca/scs/md_property/"
  
  HTTP/1.0 201 CREATED
  Date: Wed, 03 Jun 2015 21:30:37 GMT
  Server: WSGIServer/0.2 CPython/3.4.1
  Content-Type: text/html; charset=utf-8
- Location: http://localhost:8000/scs/md_property/5/
+ Location: https://www.rpsmarf.ca/scs/md_property/5/
  Vary: Accept
  X-Frame-Options: SAMEORIGIN
 
@@ -293,17 +297,17 @@ This section describes how to setup a new remote agent and get it connected to t
 7.  SSH to the SCS node
 8.  Create the agent object using the REST API.
 
-  a.   $ curl -i -H "Content-Type: application/json" –H “$API_Key”-d '{"owner": "/scs/user/1/", "name": "<name>", "guid":"<name of remote agent   in sra.conf>","agentUrl":"ice://<hostname of remote agent>"} ' “http://localhost/scs/agent/”
+  a.   $ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"owner": "/scs/user/1/", "name": "<name>", "guid":"<name of remote agent   in sra.conf>","agentUrl":"ice://<hostname of remote agent>"} ' "http://localhost/scs/agent/"
   
   b.  Check the result and status after 15 seconds or so and we should see the status go to "up" as the remote agent registers with the SCS     (assuming it is running):
         
-        $ curl -H “$API-Key” http://demo/scs/agent/2/  <-- Use value returned in step a
+        $ curl -H "$API-Key" "http://demo/scs/agent/2/"  <-- Use value returned in step a
 
 **Setting up a Container**
          
 Next we create a container which refers to the agent just created.
           
-$ curl -i -H "Content-Type: application/json" –H “$API_Key” -d '{ "name": "Alberta Container", "name_key": "testab1_tmp", "containerUrl":"local:// localhost/tmp", "agent": "/scs/agent/2/"} ' “http://demo.rpsmarf.ca/scs/container/”
+$ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{ "name": "Alberta Container", "name_key": "testab1_tmp", "containerUrl":"local:// localhost/tmp", "agent": "/scs/agent/2/"} ' "http://demo.rpsmarf.ca/scs/container/"
            
 After setting up the container, you can create your own storage resources within the container.
             
@@ -311,7 +315,7 @@ After setting up the container, you can create your own storage resources within
              
 You may create a new resource type by doing the following. Please note that storage resources have the type data.
               
-$ curl -i -H "Content-Type: application/json" –H “$API_Key” -d '{"name": "tool_copy_source", "nature": "data", "description": "This is a source   of copy data"}' http://demo.rpsmarf.ca/scs/resource_type/
+$ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"name": "tool_copy_source", "nature": "data", "description": "This is a source   of copy data"}' "http://demo.rpsmarf.ca/scs/resource_type/"
                
 Please note that storage resources have the type data.
                 
@@ -327,7 +331,7 @@ X-Frame-Options: SAMEORIGIN
 
 A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/.
  
-$ curl -i -H "Content-Type: application/json" -H “$API_Key” -d '{"name": "data_repo","resource_type": "/scs/resource_type/1/", "container": "/scs/ container/1/", "owner": "/scs/user/1/"}' http://demo.rpsmarf.ca/scs/resource/
+$ curl -i -H "Content-Type: application/json" -H "$API_Key" -d '{"name": "data_repo","resource_type": "/scs/resource_type/1/", "container": "/scs/ container/1/", "owner": "/scs/user/1/"}' "http://demo.rpsmarf.ca/scs/resource/"
   
 HTTP/1.1 201 CREATED
 Server: nginx/1.6.2
