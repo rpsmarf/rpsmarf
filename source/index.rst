@@ -8,6 +8,9 @@ Welcome to the RPSMARF Project
 
 Project Description
 ===================
+The  Research  Platform  for Smart  Facilities  Management  (RP-SMARF)  is  a  middleware  platform the objective of which is to facilitate software and data sharing among researchers.
+
+
 Guide:
 
 .. toctree::
