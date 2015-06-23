@@ -195,7 +195,7 @@ The is the operator used to compare the records in the repository to the values 
 
  **Search Examples**
 
- Assuming there are two files with different temperatures where temperature is a md_property_type object and the md_repo is /scs/md_repo/1/. The host on which the scs is running is https://www.rpsmarf.ca.
+Assuming there are two files with different temperatures where temperature is a md_property_type object and the md_repo is /scs/md_repo/1/. The host on which the scs is running is https://www.rpsmarf.ca.
  
  f1 - has temperature -5
  
@@ -240,6 +240,38 @@ curl –H "$API_Key" "https://www.rpsmarf.ca/scs/md_path/search/?repo=1&temperat
              ]
 }
                            
+
+**Special Metadata Repository Operations**
+
+**Bulk Upload**
+
+This is a post operation which uploads a set of metadata properties associated with a specific metadata repo and resource.
+
+For example:
+
+curl -H "$API-Key" -F properties=@properties.json "https://www.rpsmarf.ca/scs/bulkupload/?resource=4&repo=2
+
+Uploads the metadata in a file called properties.json into metadata repo 2 with the relative paths in properties.json associated with resource 4.
+
+The data in the file properties.json should be of the form:
+{
+  "propType":[
+    "wind_speed",
+    "temperature"
+  ],
+  "data": {
+   "dir\/f6": [
+   73,
+   -10
+   ],
+  "dir\/f8": [
+    77,
+    -36
+   ],
+...
+}
+
+Here, the propType element must contain a list of strings with the property names. In addition, the data element contains a key value pair. The key is the file path within the resource and the values are the list of properties which must be ordered in the same manner as they have been defined in the propType element.
 
 Deploying Services
 ------------------

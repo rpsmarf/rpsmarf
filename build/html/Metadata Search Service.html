@@ -191,8 +191,10 @@ X-Frame-Options: SAMEORIGIN</div></blockquote>
 <li>prop_value: This is the value of the property.</li>
 </ol>
 <p><strong>Search Examples</strong></p>
+</div></blockquote>
 <p>Assuming there are two files with different temperatures where temperature is a md_property_type object and the md_repo is /scs/md_repo/1/. The host on which the scs is running is <a class="reference external" href="https://www.rpsmarf.ca">https://www.rpsmarf.ca</a>.</p>
-<p>f1 - has temperature -5</p>
+<blockquote>
+<div><p>f1 - has temperature -5</p>
 <p>f2 - has temperature 31</p>
 <p>To find the files with temperature greater than -5 do:</p>
 <p>curl –H &#8220;$API_Key&#8221; &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/md_path/search/?repo=1&amp;temperature__gt=-5">https://www.rpsmarf.ca/scs/md_path/search/?repo=1&amp;temperature__gt=-5</a>&#8221;
@@ -240,6 +242,39 @@ X-Frame-Options: SAMEORIGIN</div></blockquote>
 </dl>
 </div></blockquote>
 <p>}</p>
+<p><strong>Special Metadata Repository Operations</strong></p>
+<p><strong>Bulk Upload</strong></p>
+<p>This is a post operation which uploads a set of metadata properties associated with a specific metadata repo and resource.</p>
+<p>For example:</p>
+<p>curl -H &#8220;$API-Key&#8221; -F <a class="reference external" href="mailto:properties=&#37;&#52;&#48;properties&#46;json">properties=<span>&#64;</span>properties<span>&#46;</span>json</a> &#8220;<a class="reference external" href="https://www.rpsmarf.ca/scs/bulkupload/?resource=4&amp;repo=2">https://www.rpsmarf.ca/scs/bulkupload/?resource=4&amp;repo=2</a></p>
+<p>Uploads the metadata in a file called properties.json into metadata repo 2 with the relative paths in properties.json associated with resource 4.</p>
+<p>The data in the file properties.json should be of the form:
+{</p>
+<blockquote>
+<div><dl class="docutils">
+<dt>&#8220;propType&#8221;:[</dt>
+<dd>&#8220;wind_speed&#8221;,
+&#8220;temperature&#8221;</dd>
+</dl>
+<p>],
+&#8220;data&#8221;: {</p>
+<blockquote>
+<div>&#8220;dir/f6&#8221;: [
+73,
+-10
+],</div></blockquote>
+<dl class="docutils">
+<dt>&#8220;dir/f8&#8221;: [</dt>
+<dd><blockquote class="first">
+<div>77,
+-36</div></blockquote>
+<p class="last">],</p>
+</dd>
+</dl>
+</div></blockquote>
+<p>...
+}</p>
+<p>Here, the propType element must contain a list of strings with the property names. In addition, the data element contains a key value pair. The key is the file path within the resource and the values are the list of properties which must be ordered in the same manner as they have been defined in the propType element.</p>
 </div>
 <div class="section" id="deploying-services">
 <h2>Deploying Services<a class="headerlink" href="#deploying-services" title="Permalink to this headline">¶</a></h2>
