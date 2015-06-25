@@ -385,7 +385,7 @@ This section describes how to setup a new remote agent and get it connected to t
 7.  SSH to the SCS node
 8.  Create the agent object using the REST API.
 
-  a.   $ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"owner": "/scs/user/1/", "name": "<name>", "guid":"<name of remote agent   in sra.conf>","agentUrl":"ice://<hostname of remote agent>"} ' "http://localhost/scs/agent/"
+  a.   $ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"owner": "/scs/user/1/", "name": "<name>", "guid":"<name of remote agent in sra.conf>","description":"<description>","agentUrl":"ice://<hostname of remote agent>"} ' "http://localhost/scs/agent/"
   
   b.  Check the result and status after 15 seconds or so and we should see the status go to "up" as the remote agent registers with the SCS     (assuming it is running):
         
@@ -395,7 +395,7 @@ This section describes how to setup a new remote agent and get it connected to t
          
 Next we create a container which refers to the agent just created.
           
-$ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{ "name": "Alberta Container", "name_key": "testab1_tmp", "containerUrl":"local:// localhost/tmp", "agent": "/scs/agent/2/"} ' "http://demo.rpsmarf.ca/scs/container/"
+$ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{ "name": "Alberta Container", "name_key": "testab1_tmp", "description":"<description>","containerUrl":"local:// localhost/tmp", "agent": "/scs/agent/2/"} ' "http://demo.rpsmarf.ca/scs/container/"
            
 After setting up the container, you can create your own storage resources within the container.
             
@@ -419,7 +419,7 @@ X-Frame-Options: SAMEORIGIN
 
 A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/.
  
-$ curl -i -H "Content-Type: application/json" -H "$API_Key" -d '{"name": "data_repo","resource_type": "/scs/resource_type/1/", "container": "/scs/ container/1/", "owner": "/scs/user/1/"}' "http://demo.rpsmarf.ca/scs/resource/"
+$ curl -i -H "Content-Type: application/json" -H "$API_Key" -d '{"name": "data_repo","resource_type": "/scs/resource_type/1/", "container": "/scs/ container/1/", "description":"<description>","owner": "/scs/user/1/","parametersJson": "{\"folder\": \"files/\"}"}' "http://demo.rpsmarf.ca/scs/resource/"
   
 HTTP/1.1 201 CREATED
 Server: nginx/1.6.2
@@ -431,6 +431,7 @@ Location: http://demo.rpsmarf.ca/scs/resource/1/
 Vary: Accept
 X-Frame-Options: SAMEORIGIN
 
+The parameter folder in parametersJson defines the location of the resource within the container.
 **How to Configure the VM in the Most Basic Configuration**
 
 1.  To initialize the control server, run the script scsInstallAndRestart.sh.

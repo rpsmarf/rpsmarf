@@ -481,9 +481,8 @@ ii. clicking on Access and Security on the left hand side and selecting the Floa
 <div><ol class="loweralpha simple">
 <li>sudo emacs /etc/hosts and add:</li>
 <li>&lt;private IP address of the SCS node&gt; &lt;hostname of the SCS node&gt;</li>
-<li>For example:</li>
-<li>10.0.82.6 demo.rpsmarf.ca</li>
 </ol>
+<p>For example: 10.0.82.6 demo.rpsmarf.ca</p>
 </div></blockquote>
 <ol class="arabic" start="3">
 <li><p class="first">Install SRA</p>
@@ -506,7 +505,7 @@ ii. clicking on Access and Security on the left hand side and selecting the Floa
 <li><p class="first">Create the agent object using the REST API.</p>
 <blockquote>
 <div><ol class="loweralpha simple">
-<li>curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key”-d &#8216;{&#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;, &#8220;name&#8221;: &#8220;&lt;name&gt;&#8221;, &#8220;guid&#8221;:&#8221;&lt;name of remote agent in sra.conf&gt;&#8221;,&#8221;agentUrl&#8221;:&#8221;ice://&lt;hostname of remote agent&gt;&#8221;} &#8216; &#8220;http://localhost/scs/agent/&#8221;</li>
+<li>curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key”-d &#8216;{&#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;, &#8220;name&#8221;: &#8220;&lt;name&gt;&#8221;, &#8220;guid&#8221;:&#8221;&lt;name of remote agent in sra.conf&gt;&#8221;,&#8221;description&#8221;:&#8221;&lt;description&gt;&#8221;,&#8221;agentUrl&#8221;:&#8221;ice://&lt;hostname of remote agent&gt;&#8221;} &#8216; &#8220;http://localhost/scs/agent/&#8221;</li>
 <li>Check the result and status after 15 seconds or so and we should see the status go to &#8220;up&#8221; as the remote agent registers with the SCS (assuming it is running):</li>
 </ol>
 <p>$ curl -H &#8220;$API-Key&#8221; &#8220;<a class="reference external" href="http://demo/scs/agent/2/">http://demo/scs/agent/2/</a>&#8221;  &lt;&#8211; Use value returned in step a</p>
@@ -515,7 +514,7 @@ ii. clicking on Access and Security on the left hand side and selecting the Floa
 </ol>
 <p><strong>Setting up a Container</strong></p>
 <p>Next we create a container which refers to the agent just created.</p>
-<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H &#8220;$API_Key&#8221; -d &#8216;{ &#8220;name&#8221;: &#8220;Alberta Container&#8221;, &#8220;name_key&#8221;: &#8220;testab1_tmp&#8221;, &#8220;containerUrl&#8221;:&#8221;local://localhost/tmp&#8221;, &#8220;agent&#8221;: &#8220;/scs/agent/2/&#8221;} &#8216; &#8220;http://demo.rpsmarf.ca/scs/container/&#8221;</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H &#8220;$API_Key&#8221; -d &#8216;{ &#8220;name&#8221;: &#8220;Alberta Container&#8221;, &#8220;name_key&#8221;: &#8220;testab1_tmp&#8221;, &#8220;description&#8221;:&#8221;&lt;description&gt;&#8221;,containerUrl&#8221;:&#8221;local://localhost/tmp&#8221;, &#8220;agent&#8221;: &#8220;/scs/agent/2/&#8221;} &#8216; &#8220;http://demo.rpsmarf.ca/scs/container/&#8221;</p>
 <p>After setting up the container, you can create your own storage resources within the container.</p>
 <p><strong>Resource Types and Resources</strong></p>
 <p>You may create a new resource type by doing the following. Please note that storage resources have the type data.</p>
@@ -531,7 +530,7 @@ Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resourc
 Vary: Accept
 X-Frame-Options: SAMEORIGIN</p>
 <p>A new resource may be created as following. The following example assumes that the resource type is /scs/resource_type/1/.</p>
-<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H &#8220;$API_Key&#8221; -d &#8216;{&#8220;name&#8221;: &#8220;data_repo&#8221;,&#8221;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;container&#8221;: &#8220;/scs/container/1/&#8221;, &#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;}&#8217; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/">http://demo.rpsmarf.ca/scs/resource/</a>&#8220;</p>
+<p>$ curl -i -H &#8220;Content-Type: application/json&#8221; -H &#8220;$API_Key&#8221; -d &#8216;{&#8220;name&#8221;: &#8220;data_repo&#8221;,&#8221;resource_type&#8221;: &#8220;/scs/resource_type/1/&#8221;, &#8220;container&#8221;: &#8220;/scs/container/1/&#8221;, &#8220;description&#8221;:&#8221;&lt;description&gt;&#8221;,&#8221;owner&#8221;: &#8220;/scs/user/1/&#8221;,&#8221;parametersJson&#8221;: &#8220;{&#8220;folder&#8221;: &#8220;files/&#8221;}&#8221;}&#8217; &#8220;<a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/">http://demo.rpsmarf.ca/scs/resource/</a>&#8220;</p>
 <p>HTTP/1.1 201 CREATED
 Server: nginx/1.6.2
 Date: Fri, 21 Nov 2014 18:58:16 GMT
@@ -541,6 +540,7 @@ Connection: keep-alive
 Location: <a class="reference external" href="http://demo.rpsmarf.ca/scs/resource/1/">http://demo.rpsmarf.ca/scs/resource/1/</a>
 Vary: Accept
 X-Frame-Options: SAMEORIGIN</p>
+<p>The folder in parametersJson defines the folder within the container.</p>
 </div>
 </div>
 
