@@ -380,15 +380,17 @@ X-Frame-Options: SAMEORIGIN</div></blockquote>
 </ol>
 <p><strong>Setting Up a New Remote Agent</strong></p>
 <p>This section describes how to setup a new remote agent and get it connected to the SCS that will control it.</p>
-<p>1.  SSH to the newly created node
-2.</p>
-<blockquote>
-<div><ol class="loweralpha simple">
+<ol class="arabic simple">
+<li>SSH to the newly created node</li>
 <li>sudo emacs /etc/hosts and add:</li>
-<li>&lt;private IP address of the SCS node&gt; &lt;hostname of the SCS node&gt;</li>
-<li>For example:</li>
-<li>10.0.82.6 demo.rpsmarf.ca</li>
 </ol>
+<blockquote>
+<div><p>&lt;private IP address of the SCS node&gt; &lt;hostname of the SCS node&gt;</p>
+<p>For example:10.0.82.6 demo.rpsmarf.ca</p>
+<p>The private IP address of the node may be found by using the command ifconfig eth0.</p>
+<p>This is needed because in the DAIR cloud, you cannot communicate with another node in the same DAIR region via the destination node&#8217;s public IP address.
+The RP-SMARF software distribution node is in the quebec region so the line above is needed for nodes in the quebec region and must be removed for non-
+quebec-region nodes because then we need the node to use the public IP address instead of the private IP address.</p>
 </div></blockquote>
 <ol class="arabic simple" start="3">
 <li>Install SRA</li>
@@ -417,9 +419,11 @@ X-Frame-Options: SAMEORIGIN</div></blockquote>
 </li>
 </ol>
 <blockquote>
-<div><ol class="loweralpha">
-<li><p class="first">$ curl -i -H &#8220;Content-Type: application/json&#8221; –H &#8220;$API_Key&#8221; -d &#8216;{&#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;, &#8220;name&#8221;: &#8220;&lt;name&gt;&#8221;, &#8220;guid&#8221;:&#8221;&lt;name of remote agent in sra.conf&gt;&#8221;,&#8221;description&#8221;:&#8221;&lt;description&gt;&#8221;,&#8221;agentUrl&#8221;:&#8221;ice://&lt;hostname of remote agent&gt;&#8221;} &#8216; &#8220;http://localhost/scs/agent/&#8221;</p>
-</li>
+<div><ol class="loweralpha simple">
+<li>$ curl -i -H &#8220;Content-Type: application/json&#8221; –H &#8220;$API_Key&#8221; -d &#8216;{&#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;, &#8220;name&#8221;: &#8220;&lt;name&gt;&#8221;, &#8220;guid&#8221;:&#8221;&lt;name of remote agent in sra.conf&gt;&#8221;,&#8221;description&#8221;:&#8221;&lt;description&gt;&#8221;,&#8221;agentUrl&#8221;:&#8221;ice://&lt;hostname of remote agent&gt;&#8221;} &#8216; &#8220;http://localhost/scs/agent/&#8221;</li>
+</ol>
+<p>Please note that the remote agent listens on port 9001. The agent URL will be like ice://test.rpsmarf.ca:9001 for example.</p>
+<ol class="loweralpha" start="2">
 <li><p class="first">Check the result and status after 15 seconds or so and we should see the status go to &#8220;up&#8221; as the remote agent registers with the SCS     (assuming it is running):</p>
 <blockquote>
 <div><p>$ curl -H &#8220;$API-Key&#8221; &#8220;<a class="reference external" href="http://demo/scs/agent/2/">http://demo/scs/agent/2/</a>&#8221;  &lt;&#8211; Use value returned in step a</p>

@@ -364,12 +364,18 @@ This section describes how to create a VM in the DAIR cloud.
 This section describes how to setup a new remote agent and get it connected to the SCS that will control it.
   
 1.  SSH to the newly created node
-2.
-          
-  a.  sudo emacs /etc/hosts and add:
-  b.  <private IP address of the SCS node> <hostname of the SCS node>
-  c.  For example:
-  d.  10.0.82.6 demo.rpsmarf.ca
+2.  sudo emacs /etc/hosts and add:
+
+  <private IP address of the SCS node> <hostname of the SCS node>
+  
+  For example:10.0.82.6 demo.rpsmarf.ca
+
+  The private IP address of the node may be found by using the command ifconfig eth0.
+
+  This is needed because in the DAIR cloud, you cannot communicate with another node in the same DAIR region via the destination node's public IP address.  
+  The RP-SMARF software distribution node is in the quebec region so the line above is needed for nodes in the quebec region and must be removed for non-
+  quebec-region nodes because then we need the node to use the public IP address instead of the private IP address. 
+  
                         
 3.  Install SRA
                                                      
@@ -386,6 +392,8 @@ This section describes how to setup a new remote agent and get it connected to t
 8.  Create the agent object using the REST API.
 
   a.   $ curl -i -H "Content-Type: application/json" –H "$API_Key" -d '{"owner": "/scs/user/1/", "name": "<name>", "guid":"<name of remote agent in sra.conf>","description":"<description>","agentUrl":"ice://<hostname of remote agent>"} ' "http://localhost/scs/agent/"
+
+  Please note that the remote agent listens on port 9001. The agent URL will be like ice://test.rpsmarf.ca:9001 for example.
   
   b.  Check the result and status after 15 seconds or so and we should see the status go to "up" as the remote agent registers with the SCS     (assuming it is running):
         

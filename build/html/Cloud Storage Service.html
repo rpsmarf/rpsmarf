@@ -483,6 +483,10 @@ ii. clicking on Access and Security on the left hand side and selecting the Floa
 <li>&lt;private IP address of the SCS node&gt; &lt;hostname of the SCS node&gt;</li>
 </ol>
 <p>For example: 10.0.82.6 demo.rpsmarf.ca</p>
+<p>The private IP address of the node may be found by using the command ifconfig eth0.</p>
+<p>This is needed because in the DAIR cloud, you cannot communicate with another node in the same DAIR region via the destination node&#8217;s public IP address.
+The RP-SMARF software distribution node is in the quebec region so the line above is needed for nodes in the quebec region and must be removed for non
+quebec-region nodes because then we need the node to use the public IP address instead of the private IP address.</p>
 </div></blockquote>
 <ol class="arabic" start="3">
 <li><p class="first">Install SRA</p>
@@ -506,6 +510,9 @@ ii. clicking on Access and Security on the left hand side and selecting the Floa
 <blockquote>
 <div><ol class="loweralpha simple">
 <li>curl -i -H &#8220;Content-Type: application/json&#8221; –H “$API_Key”-d &#8216;{&#8220;owner&#8221;: &#8220;/scs/user/1/&#8221;, &#8220;name&#8221;: &#8220;&lt;name&gt;&#8221;, &#8220;guid&#8221;:&#8221;&lt;name of remote agent in sra.conf&gt;&#8221;,&#8221;description&#8221;:&#8221;&lt;description&gt;&#8221;,&#8221;agentUrl&#8221;:&#8221;ice://&lt;hostname of remote agent&gt;&#8221;} &#8216; &#8220;http://localhost/scs/agent/&#8221;</li>
+</ol>
+<p>Please note that the agent listens on port 9001. Agent URL will be ice://test.rpsmarf.ca:9001 for example.</p>
+<ol class="loweralpha simple" start="2">
 <li>Check the result and status after 15 seconds or so and we should see the status go to &#8220;up&#8221; as the remote agent registers with the SCS (assuming it is running):</li>
 </ol>
 <p>$ curl -H &#8220;$API-Key&#8221; &#8220;<a class="reference external" href="http://demo/scs/agent/2/">http://demo/scs/agent/2/</a>&#8221;  &lt;&#8211; Use value returned in step a</p>

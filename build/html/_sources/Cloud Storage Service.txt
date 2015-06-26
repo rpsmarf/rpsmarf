@@ -550,6 +550,12 @@ This section describes how to setup a new remote agent and get it connected to t
     
     For example: 10.0.82.6 demo.rpsmarf.ca
 
+    The private IP address of the node may be found by using the command ifconfig eth0.
+
+    This is needed because in the DAIR cloud, you cannot communicate with another node in the same DAIR region via the destination node's public IP address. 
+    The RP-SMARF software distribution node is in the quebec region so the line above is needed for nodes in the quebec region and must be removed for non    
+    quebec-region nodes because then we need the node to use the public IP address instead of the private IP address. 
+
 3.  Install SRA
 
     a.  sudo apt-get install smarf-sra
@@ -564,7 +570,10 @@ This section describes how to setup a new remote agent and get it connected to t
 7.  SSH to the SCS node
 8.  Create the agent object using the REST API.
 
-     a.   curl -i -H "Content-Type: application/json" –H “$API_Key”-d '{"owner": "/scs/user/1/", "name": "<name>", "guid":"<name of remote agent in sra.conf>","description":"<description>","agentUrl":"ice://<hostname of remote agent>"} ' "http://localhost/scs/agent/"  
+     a.   curl -i -H "Content-Type: application/json" –H “$API_Key”-d '{"owner": "/scs/user/1/", "name": "<name>", "guid":"<name of remote agent in sra.conf>","description":"<description>","agentUrl":"ice://<hostname of remote agent>"} ' "http://localhost/scs/agent/"
+
+     Please note that the agent listens on port 9001. Agent URL will be ice://test.rpsmarf.ca:9001 for example.
+
      b.  Check the result and status after 15 seconds or so and we should see the status go to "up" as the remote agent registers with the SCS (assuming it is running):
 
      $ curl -H "$API-Key" "http://demo/scs/agent/2/"  <-- Use value returned in step a 
