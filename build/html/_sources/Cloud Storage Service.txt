@@ -543,6 +543,7 @@ This section describes how to setup a new remote agent and get it connected to t
 
 
 1.  SSH to the newly created node
+
 2.
 
     a.  sudo emacs /etc/hosts and add:

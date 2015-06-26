@@ -364,6 +364,7 @@ This section describes how to create a VM in the DAIR cloud.
 This section describes how to setup a new remote agent and get it connected to the SCS that will control it.
   
 1.  SSH to the newly created node
+
 2.  sudo emacs /etc/hosts and add:
 
   <private IP address of the SCS node> <hostname of the SCS node>

@@ -475,10 +475,10 @@ ii. clicking on Access and Security on the left hand side and selecting the Floa
 </ol>
 <p><strong>Setting Up a New Remote Agent</strong></p>
 <p>This section describes how to setup a new remote agent and get it connected to the SCS that will control it.</p>
-<p>1.  SSH to the newly created node
-2.</p>
-<blockquote>
-<div><ol class="loweralpha simple">
+<ol class="arabic">
+<li><p class="first">SSH to the newly created node</p>
+</li>
+<li><ol class="first loweralpha simple">
 <li>sudo emacs /etc/hosts and add:</li>
 <li>&lt;private IP address of the SCS node&gt; &lt;hostname of the SCS node&gt;</li>
 </ol>
@@ -487,8 +487,7 @@ ii. clicking on Access and Security on the left hand side and selecting the Floa
 <p>This is needed because in the DAIR cloud, you cannot communicate with another node in the same DAIR region via the destination node&#8217;s public IP address.
 The RP-SMARF software distribution node is in the quebec region so the line above is needed for nodes in the quebec region and must be removed for non
 quebec-region nodes because then we need the node to use the public IP address instead of the private IP address.</p>
-</div></blockquote>
-<ol class="arabic" start="3">
+</li>
 <li><p class="first">Install SRA</p>
 <ol class="loweralpha simple">
 <li>sudo apt-get install smarf-sra</li>
